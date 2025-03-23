@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e6e6e6;
+}
+
+.topbar {
+    background-color: #8bc4c8;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar h1 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.navbar a {
+    margin-left: 25px;
+    text-decoration: none;
+    color: black;
+}
+
+.navbar a.active {
+    color: #3d85c6;
+    font-weight: bold;
+}
+
+.layout {
+    display: flex;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #a6d3da;
+    padding: 30px 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar a {
+    margin: 8px 0;
+    text-decoration: none;
+    color: #000;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+    background-color: #d2edf4;
+    font-weight: bold;
+}
+
+.main-content {
+    flex: 1;
+    padding: 40px;
+}
+
+.policy-detail-box {
+    background-color: #eef6fc;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.policy-detail-box h2 {
+    margin-top: 0;
+    color: #222;
+}
+
+.policy-detail-box ul {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.button-group {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.purchased-label {
+    background-color: #42a5f5;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.purchase-button,
+.back-button {
+    background-color: #009fe3;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.back-button {
+    background-color: gray;
+    padding: 10px 16px;
+}

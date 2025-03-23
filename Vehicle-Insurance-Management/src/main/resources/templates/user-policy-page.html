@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Page - Policy Page Profile</title>
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
+    <link rel="stylesheet" th:href="@{/css/policy.css}">
+</head>
+<body>
+<div class="topbar">
+    <h1>VEHICLE INSURANCE MANAGEMENT</h1>
+    <div class="navbar">
+        <a th:href="@{/user/profile}">Profile</a>
+        <a class="active">Policy</a>
+        <a th:href="@{/user/claim}">Claim</a>
+        <a th:href="@{/user/payment}">Payment</a>
+        <a th:href="@{/logout}">Sign Out</a>
+    </div>
+</div>
+
+<div class="layout">
+    <div class="sidebar">
+        <a th:href="@{/user/profile}" >Profile Details</a>
+        <a class="active">Purchased Policy</a>
+        <a th:href="@{/user/claim}">Insurance Claim</a>
+        <a th:href="@{/user/payment}">Payment History</a>
+    </div>
+
+    <div class="main-content">
+        <div class="policy-container">
+
+            <!-- Example of one policy card -->
+            <div class="policy-card">
+                <div class="policy-header">
+                    <h3>Policy 1 - Comprehensive Coverage</h3>
+                    <div class="policy-actions">
+                        <a th:href="@{/user/policy/1/details}" class="view-btn">View Details</a>
+                    </div>
+                </div>
+                <p>Covers theft, fire, natural disasters, vandalism, and animal damage.</p>
+            </div>
+
+            <div class="policy-card">
+                <div class="policy-header">
+                    <h3>Policy 2 - Third-Party Liability</h3>
+                    <div class="policy-actions">
+                        <a th:href="@{/user/policy/2/details}" class="purchase-btn">Purchase</a>
+                    </div>
+                </div>
+                <p>Covers damage or injury to other vehicles or people if you're at fault.</p>
+            </div>
+
+            <div class="policy-card">
+                <div class="policy-header">
+                    <h3>Policy 3 - Collision Coverage</h3>
+                    <div class="policy-actions">
+                        <a th:href="@{/user/policy/3/details}" class="purchase-btn">Purchase</a>
+                    </div>
+                </div>
+                <p>Covers repairs to your car from a crash, regardless of fault.</p>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

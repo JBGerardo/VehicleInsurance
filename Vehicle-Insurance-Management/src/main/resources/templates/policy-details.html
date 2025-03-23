@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Policy Details - Comprehensive Coverage</title>
+    <link rel="stylesheet" th:href="@{/css/policy-details.css}">
+</head>
+<body>
+<div class="topbar">
+    <h1>Vehicle Insurance</h1>
+    <div class="navbar">
+        <a th:href="@{/user/profile}">Profile</a>
+        <a th:href="@{/user/policy}" class="active">Policy</a>
+        <a th:href="@{/user/claim}">Claim</a>
+        <a th:href="@{/user/payment}">Payment</a>
+        <a th:href="@{/logout}">Sign Out</a>
+    </div>
+</div>
+
+<div class="layout">
+    <div class="sidebar">
+        <a th:href="@{/user/profile}" >Profile Details</a>
+        <a th:href="@{/user/policy}" class="active">Purchased Policy</a>
+        <a th:href="@{/user/claim}">Insurance Claim</a>
+        <a th:href="@{/user/payment}">Payment History</a>
+    </div>
+
+    <div class="main-content">
+        <div class="policy-detail-box">
+            <h2>Policy 1: Comprehensive Coverage</h2>
+            <p>This policy provides the most extensive protection against a wide range of risks.</p>
+
+            <h3>What's Covered:</h3>
+            <ul>
+                <li>Theft</li>
+                <li>Fire and explosion</li>
+                <li>Natural disasters (earthquake, flood, hailstorm)</li>
+                <li>Vandalism or malicious damage</li>
+                <li>Animal collisions</li>
+                <li>Glass damage (windshield, windows)</li>
+            </ul>
+
+            <h3>Benefits:</h3>
+            <ul>
+                <li>Peace of mind for unexpected events</li>
+                <li>Ideal for newer or higher-value vehicles</li>
+                <li>Broad protection even when your car is parked</li>
+            </ul>
+
+            <div class="button-group">
+                <span th:if="${isPurchased}" class="purchased-label">Already Purchased</span>
+                <form th:action="@{'/user/policy/' + ${policy.id} + '/purchase'}" method="post">
+                    <button type="submit">Purchase Policy</button>
+                </form>
+                <a th:href="@{/user/policy}" class="back-button">Back to Policies</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

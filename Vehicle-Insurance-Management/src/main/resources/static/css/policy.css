@@ -1,0 +1,42 @@
+.policy-card {
+    background-color: #eaf6fe;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.policy-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.policy-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.purchased-label {
+    background-color: #42a5f5;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 1px 1px 2px #888;
+}
+
+.purchase-btn, .view-btn {
+    background-color: #009fe3;
+    color: white;
+    padding: 6px 14px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.purchase-btn:hover, .view-btn:hover {
+    background-color: #007bb5;
+}
