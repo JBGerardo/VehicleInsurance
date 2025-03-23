@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Step 2</title>
+    <link rel="stylesheet" th:href="@{/css/register.css}">
+</head>
+<body>
+<div class="container">
+    <form class="register-box" th:action="@{/register-final}" method="post">
+        <h2>Step 2: Create Account</h2>
+
+        <!-- Hidden memberId passed from Step 1 -->
+        <input type="hidden" name="memberId" th:value="${memberId}" />
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required />
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required />
+
+        <button type="submit">Register</button>
+    </form>
+</div>
+</body>
+</html>
