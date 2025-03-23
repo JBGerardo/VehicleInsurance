@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Page - Profile</title>
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
+</head>
+<body>
+<div class="topbar">
+    <h1>VEHICLE INSURANCE MANAGEMENT</h1>
+    <div class="navbar">
+        <a th:href="@{/user/policy}">Policy</a>
+        <a th:href="@{/user/claim}">Claim</a>
+        <a th:href="@{/user/payment}">Payment</a>
+        <a th:href="@{/logout}">Sign Out</a>
+    </div>
+</div>
+
+<div class="layout">
+    <div class="sidebar">
+        <a href="#" class="active">Profile Details</a>
+        <a href="#">Purchased Policy</a>
+        <a href="#">Insurance Claim</a>
+        <a href="#">Payment History</a>
+    </div>
+
+    <div class="main-content">
+        <div class="profile-box">
+            <h2>Welcome! <span th:text="${userName}"></span></h2>
+            <div class="profile-header">
+                <h3>Profile Details</h3>
+                <a th:href="@{/user/profile/edit}" class="edit-button">Edit</a>
+            </div>
+
+            <div class="form-group">
+                <label>First Name:</label>
+                <div class="field" th:text="${member.firstName}">FirstName</div>
+            </div>
+
+            <div class="form-group">
+                <label>Last Name:</label>
+                <div class="field" th:text="${member.lastName}">LastName</div>
+            </div>
+
+            <div class="form-group">
+                <label>Email:</label>
+                <div class="field" th:text="${member.email}">Email</div>
+            </div>
+
+            <div class="form-group">
+                <label>Phone:</label>
+                <div class="field" th:text="${member.phone}">Phone</div>
+            </div>
+
+            <div class="form-group">
+                <label>Street:</label>
+                <div class="field" th:text="${member.street}">Street</div>
+            </div>
+
+            <div class="form-group">
+                <label>City:</label>
+                <div class="field" th:text="${member.city}">City</div>
+            </div>
+
+            <div class="form-group">
+                <label>Province:</label>
+                <div class="field" th:text="${member.province}">Province</div>
+            </div>
+
+            <div class="form-group">
+                <label>Postal Code:</label>
+                <div class="field" th:text="${member.postalCode}">PostalCode</div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>
