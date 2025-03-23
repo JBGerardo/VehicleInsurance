@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body>
+<div class="container">
+    <form class="login-box" th:action="@{/login}" method="post">
+        <h2>Vehicle Insurance <br> Management</h2>
+        <p th:if="${message}" th:text="${message}" style="color: green;"></p>
+        <p th:if="${error}" th:text="${error}" style="color: red;"></p>
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required aria-label="Username">
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required aria-label="Password">
+
+        <div class="links">
+            <a th:href="@{/forgot-password}">Forgot Password?</a>
+            <a th:href="@{/register}">Create an Account</a>
+        </div>
+
+        <button type="submit">Sign In</button>
+    </form>
+</div>
+</body>
+</html>
