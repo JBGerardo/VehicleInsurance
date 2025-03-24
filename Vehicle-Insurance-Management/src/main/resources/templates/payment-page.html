@@ -1,0 +1,24 @@
+<!-- templates/payment.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting to Payment</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+<h2>Redirecting to Stripe Checkout...</h2>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const stripe = Stripe([[${stripePublicKey}]]);
+    stripe.redirectToCheckout({
+        sessionId: '[[${sessionId}]]'
+    }).then(function (result) {
+        // Handle errors here
+        console.error(result.error.message);
+    });
+    /*]]>*/
+</script>
+</body>
+</html>
