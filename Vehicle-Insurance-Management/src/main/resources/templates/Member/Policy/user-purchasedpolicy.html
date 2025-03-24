@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchased Policies</title>
+    <link rel="stylesheet" th:href="@{/css/policy-details.css}">
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
+</head>
+<body>
+<div class="topbar">
+    <h1>Vehicle Insurance</h1>
+    <div class="navbar">
+        <a th:href="@{/user/profile}">Profile</a>
+        <a th:href="@{/user/policy}" class="active">Policy</a>
+        <a th:href="@{/user/claim}">Claim</a>
+        <a th:href="@{/user/payment}">Payment</a>
+        <a th:href="@{/logout}">Sign Out</a>
+    </div>
+</div>
+
+<div class="layout">
+    <div class="sidebar">
+        <a th:href="@{/user/profile}">Profile Details</a>
+        <a th:href="@{/user/purchased-policies}" class="active">Purchased Policy</a>
+        <a th:href="@{/user/claim/history}">Insurance Claim</a>
+        <a th:href="@{/user/payment}">Payment History</a>
+    </div>
+
+    <div class="main-content">
+        <h2>Purchased Policies</h2>
+
+        <div th:if="${#lists.isEmpty(policies)}">
+            <p>You haven't purchased any policies yet.</p>
+        </div>
+
+        <div th:unless="${#lists.isEmpty(policies)}">
+            <div th:each="userPolicy : ${policies}" class="policy-card">
+                <h3 th:text="${userPolicy.policy.name}">Policy Name</h3>
+                <p th:text="${userPolicy.policy.description}">Policy description here.</p>
+                <p><strong>Price:</strong> $<span th:text="${userPolicy.policy.price}"></span></p>
+
+                <p>
+                    <strong>Valid From:</strong>
+                    <span th:text="${#temporals.format(userPolicy.purchaseDate, 'yyyy-MM-dd')}"></span><br>
+                    <strong>Valid Until:</strong>
+                    <span th:text="${#temporals.format(userPolicy.purchaseDate.plusYears(1), 'yyyy-MM-dd')}"></span>
+                </p>
+
+                <a th:href="@{'/user/policy/' + ${userPolicy.policy.id} + '/details'}" class="btn btn-primary">View Details</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Policy Details - Third-Party Liability</title>
+    <title>Policy Details - Comprehensive Coverage</title>
     <link rel="stylesheet" th:href="@{/css/policy-details.css}">
 </head>
 <body>
 <div class="topbar">
-    <h1>Vehicle Insurance</h1>
+    <h1>VEHICLE INSURANCE MANAGEMENT</h1>
     <div class="navbar">
         <a th:href="@{/user/profile}">Profile</a>
         <a th:href="@{/user/policy}" class="active">Policy</a>
@@ -18,42 +18,41 @@
 </div>
 
 <div class="layout">
-    <div class="sidebar">
-        <a th:href="@{/user/profile}">Profile Details</a>
-        <a th:href="@{/user/policy}" class="active">Purchased Policy</a>
-        <a th:href="@{/user/claim}">Insurance Claim</a>
-        <a th:href="@{/user/payment}">Payment History</a>
-    </div>
 
     <div class="main-content">
         <div class="policy-detail-box">
-            <h2>Policy 2: Third-Party Liability</h2>
-            <p>This policy covers damage to other people's property or injury to others caused by your vehicle.</p>
+            <h2>Policy 1: Comprehensive Coverage</h2>
+            <p>This policy provides the most extensive protection against a wide range of risks.</p>
 
             <h3>What's Covered:</h3>
             <ul>
-                <li>Damage to other vehicles or property</li>
-                <li>Bodily injury to other drivers or pedestrians</li>
-                <li>Legal fees if you're sued</li>
-                <li>Compensation claims from third parties</li>
+                <li>Theft</li>
+                <li>Fire and explosion</li>
+                <li>Natural disasters (earthquake, flood, hailstorm)</li>
+                <li>Vandalism or malicious damage</li>
+                <li>Animal collisions</li>
+                <li>Glass damage (windshield, windows)</li>
             </ul>
 
             <h3>Benefits:</h3>
             <ul>
-                <li>Meets legal insurance requirements</li>
-                <li>Essential if you drive regularly</li>
-                <li>Affordable coverage for liability issues</li>
+                <li>Peace of mind for unexpected events</li>
+                <li>Ideal for newer or higher-value vehicles</li>
+                <li>Broad protection even when your car is parked</li>
             </ul>
 
             <div class="button-group">
+                <!-- Show this only if the policy is already purchased -->
                 <span th:if="${isPurchased}" class="purchased-label">Already Purchased</span>
 
+                <!-- Show this only if the policy is NOT purchased -->
                 <form th:if="${!isPurchased}" th:action="@{/user/policy/{id}/purchase(id=${policy.id})}" method="post">
                     <button type="submit">Purchase Policy</button>
                 </form>
 
                 <a th:href="@{/user/policy}" class="back-button">Back to Policies</a>
             </div>
+
         </div>
     </div>
 </div>

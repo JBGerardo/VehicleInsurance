@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Policy Details - Comprehensive Coverage</title>
+    <title>Policy Details - Collision Coverage</title>
     <link rel="stylesheet" th:href="@{/css/policy-details.css}">
 </head>
 <body>
 <div class="topbar">
-    <h1>Vehicle Insurance</h1>
+    <h1>VEHICLE INSURANCE MANAGEMENT</h1>
     <div class="navbar">
         <a th:href="@{/user/profile}">Profile</a>
         <a th:href="@{/user/policy}" class="active">Policy</a>
@@ -18,47 +18,36 @@
 </div>
 
 <div class="layout">
-    <div class="sidebar">
-        <a th:href="@{/user/profile}" >Profile Details</a>
-        <a th:href="@{/user/policy}" class="active">Purchased Policy</a>
-        <a th:href="@{/user/claim}">Insurance Claim</a>
-        <a th:href="@{/user/payment}">Payment History</a>
-    </div>
 
     <div class="main-content">
         <div class="policy-detail-box">
-            <h2>Policy 1: Comprehensive Coverage</h2>
-            <p>This policy provides the most extensive protection against a wide range of risks.</p>
+            <h2>Policy 3: Collision Coverage</h2>
+            <p>This policy helps pay for damage to your vehicle caused by a collision, regardless of fault.</p>
 
             <h3>What's Covered:</h3>
             <ul>
-                <li>Theft</li>
-                <li>Fire and explosion</li>
-                <li>Natural disasters (earthquake, flood, hailstorm)</li>
-                <li>Vandalism or malicious damage</li>
-                <li>Animal collisions</li>
-                <li>Glass damage (windshield, windows)</li>
+                <li>Vehicle-to-vehicle collisions</li>
+                <li>Hit-and-run damage</li>
+                <li>Single-car accidents (tree, guardrail, etc.)</li>
+                <li>Parking lot collisions</li>
             </ul>
 
             <h3>Benefits:</h3>
             <ul>
-                <li>Peace of mind for unexpected events</li>
-                <li>Ideal for newer or higher-value vehicles</li>
-                <li>Broad protection even when your car is parked</li>
+                <li>Great for frequent drivers</li>
+                <li>Reduces repair costs after accidents</li>
+                <li>Helps maintain your car’s value</li>
             </ul>
 
             <div class="button-group">
-                <!-- Show this only if the policy is already purchased -->
                 <span th:if="${isPurchased}" class="purchased-label">Already Purchased</span>
 
-                <!-- Show this only if the policy is NOT purchased -->
                 <form th:if="${!isPurchased}" th:action="@{/user/policy/{id}/purchase(id=${policy.id})}" method="post">
                     <button type="submit">Purchase Policy</button>
                 </form>
 
                 <a th:href="@{/user/policy}" class="back-button">Back to Policies</a>
             </div>
-
         </div>
     </div>
 </div>
