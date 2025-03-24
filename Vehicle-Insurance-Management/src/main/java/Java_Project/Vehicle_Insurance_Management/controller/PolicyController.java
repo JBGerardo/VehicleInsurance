@@ -1,6 +1,7 @@
 package Java_Project.Vehicle_Insurance_Management.controller;
 
 import Java_Project.Vehicle_Insurance_Management.model.InsurancePolicy;
+import Java_Project.Vehicle_Insurance_Management.model.StripeSession;
 import Java_Project.Vehicle_Insurance_Management.service.PolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,14 +9,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import com.stripe.exception.StripeException;
+import com.stripe.model.checkout.Session;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 
 @Controller
 public class PolicyController {
 
-    @Autowired
+
     private PolicyService policyService;
+    public PolicyController(PolicyService policyService) {
+        this.policyService = policyService;
+    }
 
     @GetMapping("/user/policy")
     public String showPolicyPage(Model model) {
@@ -33,12 +40,51 @@ public class PolicyController {
 
         return "policy-details";
     }
+    @GetMapping("/user/policy2")
+    public String showPolicy2Details(Model model, Principal principal) {
+        InsurancePolicy policy = policyService.getPolicyById(2L);
+        boolean isPurchased = policyService.isPolicyPurchased(principal.getName(), 2L);
+
+        model.addAttribute("policy", policy);
+        model.addAttribute("isPurchased", isPurchased);
+        return "policy-2-details";
+    }
+
+    @GetMapping("/user/policy3")
+    public String showPolicy3Details(Model model, Principal principal) {
+        InsurancePolicy policy = policyService.getPolicyById(3L);
+        boolean isPurchased = policyService.isPolicyPurchased(principal.getName(), 3L);
+
+        model.addAttribute("policy", policy);
+        model.addAttribute("isPurchased", isPurchased);
+        return "policy-3-details";
+    }
 
     @PostMapping("/user/policy/{id}/purchase")
     public String purchasePolicy(@PathVariable("id") Long policyId, Principal principal) {
-        policyService.purchasePolicy(principal.getName(), policyId);
-        return "redirect:/user/policy/" + policyId + "/details?success=true";
+        try {
+            StripeSession session = policyService.createStripeSession(principal.getName(), policyId);
+            return "redirect:" + session.getUrl(); // ✅ Redirect to Stripe
+        } catch (StripeException e) {
+            e.printStackTrace();
+            return "redirect:/user/policy/" + policyId + "/details?error=stripe";
+        }
     }
 
+    @GetMapping("/user/policy/{id}/pay")
+    public String redirectToStripe(@PathVariable Long id, Principal principal, Model model) throws StripeException {
+        String username = principal.getName();
+        StripeSession session = policyService.createStripeSession(username, id); // returns sessionId & amount
+        model.addAttribute("stripePublicKey", "your-publishable-key");
+        model.addAttribute("sessionId", session.getSessionId());
+        return "payment";
+    }
+    @GetMapping("/user/payment/success")
+    public String handlePaymentSuccess(Principal principal, @RequestParam(required = false) Long policyId) {
+        if (principal != null && policyId != null) {
+            policyService.purchasePolicy(principal.getName(), policyId);
+        }
+        return "payment-success.html";
+    }
 
 }
