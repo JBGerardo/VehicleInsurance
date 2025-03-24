@@ -62,7 +62,7 @@ public class ClaimController {
         model.addAttribute("policyClaimTypes", policyClaimTypes); // ✅ New map
         model.addAttribute("vendors", vendors);
 
-        return "claim-form";
+        return "Member/Claim/claim-form";
     }
 
     @PostMapping("/user/claim/submit")
@@ -94,7 +94,7 @@ public class ClaimController {
 
     @GetMapping("/user/claim/confirmation")
     public String showClaimConfirmation() {
-        return "claim-confirmation";
+        return "Member/Claim/claim-confirmation";
     }
 
     @GetMapping("/user/claim/history")
@@ -104,7 +104,7 @@ public class ClaimController {
         List<Claim> claims = claimRepository.findByUserId(user.getId());
 
         model.addAttribute("claims", claims);
-        return "claim-history";
+        return "Member/Claim/claim-history";
     }
 
 

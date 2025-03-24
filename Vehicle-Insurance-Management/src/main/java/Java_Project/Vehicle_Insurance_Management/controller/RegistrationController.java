@@ -69,14 +69,14 @@ public class RegistrationController {
         return "register-step1";
     }
 
-    // Optional: Display login page
     @GetMapping("/login")
-    public String showLoginPage() {
-        return "loginView";
+    public String showLoginForm() {
+        return "loginView"; // ✅ This matches the folder and filename
     }
+
     @GetMapping("/forgot-password")
     public String showForgotPasswordForm() {
-        return "forgot-password"; // looks for forgot-password.html
+        return "Login/forgot-password"; // looks for forgot-password.html
     }
 
     @PostMapping("/forgot-password")
