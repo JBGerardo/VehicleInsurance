@@ -76,7 +76,7 @@ public class RegistrationController {
 
     @GetMapping("/forgot-password")
     public String showForgotPasswordForm() {
-        return "Login/forgot-password"; // looks for forgot-password.html
+        return "forgot-password"; // looks for forgot-password.html
     }
 
     @PostMapping("/forgot-password")

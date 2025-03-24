@@ -2,6 +2,10 @@ package Java_Project.Vehicle_Insurance_Management.controller;
 
 import Java_Project.Vehicle_Insurance_Management.model.InsurancePolicy;
 import Java_Project.Vehicle_Insurance_Management.model.StripeSession;
+import Java_Project.Vehicle_Insurance_Management.model.User;
+import Java_Project.Vehicle_Insurance_Management.model.UserPolicy;
+import Java_Project.Vehicle_Insurance_Management.repository.UserPolicyRepository;
+import Java_Project.Vehicle_Insurance_Management.repository.UserRepository;
 import Java_Project.Vehicle_Insurance_Management.service.PolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -105,12 +109,19 @@ public class PolicyController {
         }
         return "Member/Payment/payment-success.html";
     }
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserPolicyRepository userPolicyRepository;
+
     @GetMapping("/user/purchased-policies")
     public String showPurchasedPolicies(Model model, Principal principal) {
         String username = principal.getName();
-        List<InsurancePolicy> purchasedPolicies = policyService.getPurchasedPolicies(username);
+        User user = userRepository.findByUsername(username);
+        List<UserPolicy> userPolicies = userPolicyRepository.findByUserId(user.getId());
 
-        model.addAttribute("policies", purchasedPolicies);
+        model.addAttribute("policies", userPolicies);
         return "Member/Policy/user-purchasedpolicy";
     }
 
