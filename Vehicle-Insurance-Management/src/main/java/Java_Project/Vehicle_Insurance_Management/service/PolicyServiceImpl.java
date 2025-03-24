@@ -15,7 +15,7 @@ import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import Java_Project.Vehicle_Insurance_Management.model.StripeSession;
 import java.math.BigDecimal;
-
+import java.util.List;
 
 
 @Service
@@ -63,6 +63,17 @@ public class PolicyServiceImpl implements PolicyService {
     }
 
     @Override
+    public List<InsurancePolicy> getPurchasedPolicies(String username) {
+        User user = userRepository.findByUsername(username);
+        List<UserPolicy> userPolicies = userPolicyRepository.findByUserId(user.getId());
+
+        return userPolicies.stream()
+                .map(UserPolicy::getPolicy)
+                .toList(); // or .collect(Collectors.toList()) for Java 8 compatibility
+    }
+
+
+    @Override
     public StripeSession createStripeSession(String username, Long policyId) throws StripeException {
         // ✅ Set your secret key
         Stripe.apiKey = "sk_test_51R5qk1DuFNdRlr0J7Auoe8wAfnAtoouEQFX1uqmMf4iBruMbzsmnuJ5ZHIJIlZo5VWpocB7Q6cnoBF6mJ0du7qez00sO4sF5qS"; // Replace with your actual key
@@ -104,6 +115,7 @@ public class PolicyServiceImpl implements PolicyService {
         return new StripeSession(session.getId(), session.getUrl(), amount);
 
     }
+
 
 
 }
