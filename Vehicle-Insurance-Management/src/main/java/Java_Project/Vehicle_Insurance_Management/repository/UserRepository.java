@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, Long> {
     // You can add custom query methods here if needed, like:
     User findByUsername(String username);
+
 }

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit a Claim</title>
+    <link rel="stylesheet" th:href="@{/css/policy-details.css}">
+    <link rel="stylesheet" th:href="@{/css/policy.css}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #e6e6e6;
+            margin: 0;
+        }
+        .form-container {
+            background-color: #fff;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        select,
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button {
+            width: 100%;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="logo">VEHICLE INSURANCE MANAGEMENT</div>
+    <div class="navbar">
+        <a th:href="@{/user/profile}">Profile</a>
+        <a th:href="@{/user/policy}">Policy</a>
+        <a th:href="@{/user/claim}" class="active">Claim</a>
+        <a th:href="@{/user/payment}">Payment</a>
+        <a th:href="@{/logout}">Sign Out</a>
+    </div>
+</div>
+
+
+<div class="form-container">
+    <h2>Submit a Claim</h2>
+    <form th:action="@{/user/claim/submit}" method="post">
+
+        <!-- Select Policy -->
+        <label for="policyId">Select Policy:</label>
+        <select name="policyId" id="policyId" required onchange="updateClaimTypes()">
+            <option value="" disabled selected>Select your policy</option>
+            <option th:each="policy : ${policies}"
+                    th:value="${policy.id}"
+                    th:text="${policy.name}"></option>
+        </select>
+
+        <label for="vehicleDetails">Vehicle Details:</label>
+        <input type="text" id="vehicleDetails" name="vehicleDetails" placeholder="e.g. Toyota Corolla 2020, Plate ABC123" required />
+
+        <!-- Claim Type (will be dynamically updated) -->
+        <label for="claimType">Claim Type:</label>
+        <select name="claimType" id="claimType" required>
+            <option value="" disabled selected>Select claim type</option>
+        </select>
+
+        <label for="vendor">Repair Shop / Vendor:</label>
+        <select name="vendor" id="vendor" required>
+            <option value="" disabled selected>Select a vendor</option>
+            <option th:each="vendor : ${vendors}" th:value="${vendor}" th:text="${vendor}"></option>
+        </select>
+
+        <label for="description">Claim Description:</label>
+        <textarea name="description" id="description" placeholder="Describe the issue in detail..." required></textarea>
+
+        <button type="submit">Submit Claim</button>
+    </form>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const policyClaimTypes = [[${policyClaimTypes}]];
+    const claimTypeSelect = document.getElementById('claimType');
+    const policySelect = document.getElementById('policyId');
+
+    function updateClaimTypes() {
+        const selectedPolicyId = policySelect.value;
+
+        // Clear existing options
+        claimTypeSelect.innerHTML = '<option value="" disabled selected>Select claim type</option>';
+
+        // Add new options from the selected policy's claim types
+        const types = policyClaimTypes[selectedPolicyId];
+        if (types) {
+            types.forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = type;
+                claimTypeSelect.appendChild(option);
+            });
+        }
+    }
+    /*]]>*/
+</script>
+
+</body>
+</html>
