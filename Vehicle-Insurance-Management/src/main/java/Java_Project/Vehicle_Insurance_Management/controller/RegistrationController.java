@@ -30,7 +30,7 @@ public class RegistrationController {
     public String saveMember(@ModelAttribute Member member, Model model) {
         Member savedMember = memberRepository.save(member);
         model.addAttribute("memberId", savedMember.getId());
-        return "Login/register-step2"; // Go to second page for username & password
+        return "register-step2"; // Go to second page for username & password
     }
 
     // STEP 2: Handle user login credentials
@@ -66,12 +66,12 @@ public class RegistrationController {
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("member", new Member());
-        return "Login/register-step1";
+        return "register-step1";
     }
 
     @GetMapping("/login")
     public String showLoginForm() {
-        return "Login/loginView"; // ✅ This matches the folder and filename
+        return "loginView"; // ✅ This matches the folder and filename
     }
 
     @GetMapping("/forgot-password")
@@ -89,7 +89,7 @@ public class RegistrationController {
 
         if (user == null) {
             model.addAttribute("error", "Username not found.");
-            return "Login/forgot-password";
+            return "forgot-password";
         }
 
         // Hash the new password before saving
@@ -98,7 +98,7 @@ public class RegistrationController {
         userRepository.save(user);
 
         model.addAttribute("message", "Password updated successfully. You can now log in.");
-        return "Login/loginView"; // redirect to login page after successful update
+        return "loginView"; // redirect to login page after successful update
     }
 
 

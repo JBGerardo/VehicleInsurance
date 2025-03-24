@@ -28,7 +28,7 @@ public class PolicyController {
     @GetMapping("/user/policy")
     public String showPolicyPage(Model model) {
         // Add policy data here if needed
-        return "Member/Policy/user-policy-page"; // This should match the HTML file name (user-policy-page.html)
+        return "user-policy-page"; // This should match the HTML file name (user-policy-page.html)
     }
 //    @GetMapping("/user/policy/{id}/details")
 //    public String showPolicyDetails(@PathVariable("id") Long policyId, Model model, Principal principal) {
