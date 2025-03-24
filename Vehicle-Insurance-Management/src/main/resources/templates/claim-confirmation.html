@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Claim Submitted</title>
+    <link rel="stylesheet" th:href="@{/css/policy-details.css}">
+    <link rel="stylesheet" th:href="@{/css/policy.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f9f9f9;
+        }
+        .confirmation-box {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .confirmation-box h2 {
+            color: #28a745;
+        }
+        .confirmation-box p {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="confirmation-box">
+    <h2>✅ Claim Submitted Successfully!</h2>
+    <p>Your claim has been received and is currently under review.</p>
+    <p>You will be notified once it has been processed by our team.</p>
+
+    <a th:href="@{/user/profile}" class="btn">Back to Dashboard</a>
+</div>
+
+</body>
+</html>
