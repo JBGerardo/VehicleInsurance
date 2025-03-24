@@ -28,7 +28,7 @@ public class PolicyController {
     @GetMapping("/user/policy")
     public String showPolicyPage(Model model) {
         // Add policy data here if needed
-        return "user-policy-page"; // This should match the HTML file name (user-policy-page.html)
+        return "Member/Policy/user-policy-page"; // This should match the HTML file name (user-policy-page.html)
     }
 //    @GetMapping("/user/policy/{id}/details")
 //    public String showPolicyDetails(@PathVariable("id") Long policyId, Model model, Principal principal) {
@@ -52,9 +52,9 @@ public class PolicyController {
 
         // Dynamically route based on policy ID
         return switch (policyId.intValue()) {
-            case 1 -> "policy-details";
-            case 2 -> "policy-2-details";
-            case 3 -> "policy-3-details";
+            case 1 -> "Member/Policy/policy-details";
+            case 2 -> "Member/Policy/policy-2-details";
+            case 3 -> "Member/Policy/policy-3-details";
             default -> "redirect:/user/policy"; // fallback if invalid ID
         };
     }
@@ -66,7 +66,7 @@ public class PolicyController {
 
         model.addAttribute("policy", policy);
         model.addAttribute("isPurchased", isPurchased);
-        return "policy-2-details";
+        return "Member/Policy/policy-2-details";
     }
 
     @GetMapping("/user/policy3")
@@ -76,7 +76,7 @@ public class PolicyController {
 
         model.addAttribute("policy", policy);
         model.addAttribute("isPurchased", isPurchased);
-        return "policy-3-details";
+        return "Member/Policy/policy-3-details";
     }
 
     @PostMapping("/user/policy/{id}/purchase")
@@ -103,7 +103,7 @@ public class PolicyController {
         if (principal != null && policyId != null) {
             policyService.purchasePolicy(principal.getName(), policyId);
         }
-        return "payment-success.html";
+        return "Member/Payment/payment-success.html";
     }
     @GetMapping("/user/purchased-policies")
     public String showPurchasedPolicies(Model model, Principal principal) {
@@ -111,7 +111,7 @@ public class PolicyController {
         List<InsurancePolicy> purchasedPolicies = policyService.getPurchasedPolicies(username);
 
         model.addAttribute("policies", purchasedPolicies);
-        return "user-purchasedpolicy";
+        return "Member/Policy/user-purchasedpolicy";
     }
 
 

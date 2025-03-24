@@ -30,7 +30,7 @@ public class LoginController {
             model.addAttribute("member", user.getMember());
         }
 
-        return "user-profile"; // This should match the filename in src/main/resources/templates/
+        return "Member/Profile/user-profile"; // This should match the filename in src/main/resources/templates/
     }
 
     @GetMapping("/user/profile/edit")
@@ -40,7 +40,7 @@ public class LoginController {
         Member member = user.getMember();
 
         model.addAttribute("member", member);
-        return "user-profile-edit";
+        return "Member/Profile/user-profile-edit";
     }
 
     @PostMapping("/user/profile/update")
