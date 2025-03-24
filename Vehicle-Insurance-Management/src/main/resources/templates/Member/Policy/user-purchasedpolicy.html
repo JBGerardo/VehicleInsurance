@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Purchased Policies</title>
     <link rel="stylesheet" th:href="@{/css/policy-details.css}">
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
 </head>
 <body>
 <div class="topbar">
@@ -33,13 +34,22 @@
         </div>
 
         <div th:unless="${#lists.isEmpty(policies)}">
-            <div th:each="policy : ${policies}" class="policy-card">
-                <h3 th:text="${policy.name}">Policy Name</h3>
-                <p th:text="${policy.description}">Policy description here.</p>
-                <p><strong>Price:</strong> $<span th:text="${policy.price}"></span></p>
-                <a th:href="@{'/user/policy/' + ${policy.id} + '/details'}" class="btn btn-primary">View Details</a>
+            <div th:each="userPolicy : ${policies}" class="policy-card">
+                <h3 th:text="${userPolicy.policy.name}">Policy Name</h3>
+                <p th:text="${userPolicy.policy.description}">Policy description here.</p>
+                <p><strong>Price:</strong> $<span th:text="${userPolicy.policy.price}"></span></p>
+
+                <p>
+                    <strong>Valid From:</strong>
+                    <span th:text="${#temporals.format(userPolicy.purchaseDate, 'yyyy-MM-dd')}"></span><br>
+                    <strong>Valid Until:</strong>
+                    <span th:text="${#temporals.format(userPolicy.purchaseDate.plusYears(1), 'yyyy-MM-dd')}"></span>
+                </p>
+
+                <a th:href="@{'/user/policy/' + ${userPolicy.policy.id} + '/details'}" class="btn btn-primary">View Details</a>
             </div>
         </div>
+
     </div>
 </div>
 </body>

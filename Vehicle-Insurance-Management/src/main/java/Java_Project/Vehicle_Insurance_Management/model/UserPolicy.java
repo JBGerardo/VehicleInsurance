@@ -23,9 +23,17 @@ public class UserPolicy {
     @Column(name = "purchase_date")
     private LocalDateTime purchaseDate;
 
+    @Column(name = "start_date")
+    private LocalDateTime startDate;
+
+    @Column(name = "end_date")
+    private LocalDateTime endDate;
+
     @PrePersist
     protected void onPurchase() {
         this.purchaseDate = LocalDateTime.now();
+        this.startDate = this.purchaseDate;
+        this.endDate = this.purchaseDate.plusYears(1); // Automatically valid for 1 year
     }
 
     // Getters and Setters
@@ -44,5 +52,17 @@ public class UserPolicy {
 
     public LocalDateTime getPurchaseDate() { return purchaseDate; }
 
-    public void setPurchaseDate(LocalDateTime purchaseDate) { this.purchaseDate = purchaseDate; }
+    public void setPurchaseDate(LocalDateTime purchaseDate) {
+        this.purchaseDate = purchaseDate;
+        this.startDate = purchaseDate;
+        this.endDate = purchaseDate.plusYears(1);
+    }
+
+    public LocalDateTime getStartDate() { return startDate; }
+
+    public void setStartDate(LocalDateTime startDate) { this.startDate = startDate; }
+
+    public LocalDateTime getEndDate() { return endDate; }
+
+    public void setEndDate(LocalDateTime endDate) { this.endDate = endDate; }
 }
