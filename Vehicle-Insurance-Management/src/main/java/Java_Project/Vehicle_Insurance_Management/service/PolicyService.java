@@ -8,6 +8,7 @@ import Java_Project.Vehicle_Insurance_Management.model.StripeSession;
 
 import java.util.List;
 
+
 public interface PolicyService {
     boolean isPolicyPurchased(String username, Long policyId);
 
