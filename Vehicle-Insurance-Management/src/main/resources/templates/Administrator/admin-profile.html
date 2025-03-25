@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrator Page - Profile</title>
+    <link rel="stylesheet" th:href="@{/css/Admin/admin_profile_style.css}">
+</head>
+<body>
+
+<div class="topbar">
+    <h1>VEHICLE INSURANCE MANAGEMENT</h1>
+    <div class="navbar">
+        <a href="#" class="active">Profile</a>
+        <a href="#">Policy</a>
+        <a href="#">Claim</a>
+        <a href="#">Payment</a>
+        <a href="#">Sign Out</a>
+    </div>
+</div>
+
+<div class="layout">
+    <div class="sidebar">
+        <a href="#" class="active">Profile Details</a>
+        <a href="#">Manage User</a>
+        <a href="#">Manage Policies</a>
+        <a href="#">Manage Claims</a>
+        <a href="#">View Payments</a>
+        <a href="#">Generate Report</a>
+    </div>
+
+    <div class="main-content">
+        <div class="profile-box">
+            <h2>Welcome! <span th:text="${admin.firstName}">John</span></h2>
+            <div class="profile-header">
+                <h3>Profile Details</h3>
+                <a th:href="@{/admin/profile/edit}" class="edit-button">Edit</a>
+            </div>
+
+            <div class="form-group">
+                <label>First Name:</label>
+                <div class="field" th:text="${admin.firstName}">John</div>
+            </div>
+
+            <div class="form-group">
+                <label>Last Name:</label>
+                <div class="field" th:text="${admin.lastName}">Doe</div>
+            </div>
+
+            <div class="form-group">
+                <label>Email:</label>
+                <div class="field" th:text="${admin.email}">admin@example.com</div>
+            </div>
+
+            <div class="form-group">
+                <label>Phone:</label>
+                <div class="field" th:text="${admin.phone}">+123456789</div>
+            </div>
+
+            <div class="form-group">
+                <label>Street:</label>
+                <div class="field" th:text="${admin.street}">123 Main Street</div>
+            </div>
+
+            <div class="form-group">
+                <label>City:</label>
+                <div class="field" th:text="${admin.city}">CityName</div>
+            </div>
+
+            <div class="form-group">
+                <label>Province:</label>
+                <div class="field" th:text="${admin.province}">ProvinceName</div>
+            </div>
+
+            <div class="form-group">
+                <label>Postal Code:</label>
+                <div class="field" th:text="${admin.postalCode}">12345</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

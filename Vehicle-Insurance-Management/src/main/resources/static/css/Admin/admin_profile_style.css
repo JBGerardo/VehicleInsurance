@@ -1,0 +1,158 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e6e6e6;
+}
+
+.topbar {
+    background-color: #8bc4c8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+}
+
+.topbar h1 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: normal;
+    color: #666;
+}
+
+.navbar a {
+    margin-left: 30px;
+    text-decoration: none;
+    color: black;
+}
+
+.navbar a.active {
+    color: #3d85c6;
+    font-weight: bold;
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #a6d3da;
+    padding: 30px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar .circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    display: block;
+    color: #000;
+    padding: 10px 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar a:hover {
+    background-color: #d2e9ed;
+    border-radius: 8px;
+}
+
+.sidebar a.active {
+    font-weight: bold;
+    color: #0f5eff;
+    background-color: #e0f1f5;
+    border-left: 4px solid #0f5eff;
+    padding-left: 12px;
+    border-radius: 8px 0 0 8px;
+}
+
+
+.main-content {
+    flex-grow: 1;
+    padding: 40px 60px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.profile-box {
+    background-color: #eef6fc;
+    padding: 30px 40px;
+    border-radius: 10px;
+    width: 600px;
+    margin: 40px auto;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.profile-box h2 {
+    margin-bottom: 10px;
+    font-size: 22px;
+    color: #333;
+}
+
+.profile-box h3 {
+    margin: 20px 0 10px;
+    font-size: 18px;
+    color: #444;
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    width: 120px;
+    font-weight: 500;
+    color: #333;
+}
+
+.field {
+    background-color: #ddd;
+    padding: 8px 12px;
+    border-radius: 4px;
+    flex: 1;
+}
+.edit-button {
+    float: right;
+    background-color: #009fe3;
+    color: white;
+    border: none;
+    padding: 6px 16px;
+    text-decoration: none;
+    border-radius: 3px;
+    font-weight: bold;
+    box-shadow: 1px 1px 2px #888888;
+}
+.profile-box input[type="text"],
+.profile-box input[type="email"] {
+    width: 60%;
+    padding: 8px;
+    margin-left: 10px;
+    background-color: #ddd;
+    border: none;
+    border-radius: 4px;
+}
+
+.profile-box button {
+    background-color: #0099cc;
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    float: right;
+    margin-top: 10px;
+}
