@@ -4,11 +4,73 @@
     <meta charset="UTF-8">
     <title>Purchased Policies</title>
     <link rel="stylesheet" th:href="@{/css/policy-details.css}">
-    <link rel="stylesheet" th:href="@{/css/profile.css}">
+<!--    <link rel="stylesheet" th:href="@{/css/profile.css}">-->
+    <style>
+        .main-content .container {
+            padding: 40px 40px 40px 20px; /* Top, Right, Bottom, Left */
+            max-width: 800px;
+            margin-left: 0; /* Remove center alignment */
+        }
+
+
+        .policy-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .policy-card h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .main-content h2 {
+            margin-bottom: 30px;
+        }
+
+        .main-content p {
+            margin: 5px 0;
+        }
+
+        .main-content strong {
+            font-weight: 600;
+        }
+
+        .no-policies {
+            padding: 30px;
+            text-align: center;
+            color: #666;
+        }
+        .sidebar a.active {
+            font-weight: bold;
+            color: #0f5eff;
+            background-color: #e0f1f5;
+            border-left: 4px solid #0f5eff;
+            padding-left: 12px;
+            border-radius: 8px 0 0 8px;
+        }
+    </style>
 </head>
 <body>
 <div class="topbar">
-    <h1>Vehicle Insurance</h1>
+    <h1>Vehicle Insurance Management</h1>
     <div class="navbar">
         <a th:href="@{/user/profile}">Profile</a>
         <a th:href="@{/user/policy}" class="active">Policy</a>
@@ -27,30 +89,30 @@
     </div>
 
     <div class="main-content">
-        <h2>Purchased Policies</h2>
+        <div class="container">
+            <h2>Purchased Policies</h2>
 
-        <div th:if="${#lists.isEmpty(policies)}">
-            <p>You haven't purchased any policies yet.</p>
-        </div>
+            <div th:if="${#lists.isEmpty(policies)}" class="no-policies">
+                <p>You haven't purchased any policies yet.</p>
+            </div>
 
-        <div th:unless="${#lists.isEmpty(policies)}">
-            <div th:each="userPolicy : ${policies}" class="policy-card">
-                <h3 th:text="${userPolicy.policy.name}">Policy Name</h3>
-                <p th:text="${userPolicy.policy.description}">Policy description here.</p>
-                <p><strong>Price:</strong> $<span th:text="${userPolicy.policy.price}"></span></p>
-
-                <p>
-                    <strong>Valid From:</strong>
-                    <span th:text="${#temporals.format(userPolicy.purchaseDate, 'yyyy-MM-dd')}"></span><br>
-                    <strong>Valid Until:</strong>
-                    <span th:text="${#temporals.format(userPolicy.purchaseDate.plusYears(1), 'yyyy-MM-dd')}"></span>
-                </p>
-
-                <a th:href="@{'/user/policy/' + ${userPolicy.policy.id} + '/details'}" class="btn btn-primary">View Details</a>
+            <div th:unless="${#lists.isEmpty(policies)}">
+                <div th:each="userPolicy : ${policies}" class="policy-card">
+                    <h3 th:text="${userPolicy.policy.name}">Policy Name</h3>
+                    <p th:text="${userPolicy.policy.description}">Policy description here.</p>
+                    <p><strong>Price:</strong> $<span th:text="${userPolicy.policy.price}">0.00</span></p>
+                    <p>
+                        <strong>Valid From:</strong>
+                        <span th:text="${#temporals.format(userPolicy.purchaseDate, 'yyyy-MM-dd')}"></span><br>
+                        <strong>Valid Until:</strong>
+                        <span th:text="${#temporals.format(userPolicy.purchaseDate.plusYears(1), 'yyyy-MM-dd')}"></span>
+                    </p>
+                    <a th:href="@{'/user/policy/' + ${userPolicy.policy.id} + '/details'}" class="btn btn-primary">View Details</a>
+                </div>
             </div>
         </div>
-
     </div>
 </div>
+
 </body>
 </html>
