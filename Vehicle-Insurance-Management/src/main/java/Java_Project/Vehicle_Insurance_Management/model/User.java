@@ -24,6 +24,11 @@ public class User {
     @JoinColumn(name = "member_id", referencedColumnName = "id")
     private Member member;
 
+    @OneToOne
+    @JoinColumn(name = "vendor_id")
+    private Vendor vendor;
+
+
     // Getters and Setters
 
     public Long getId() {
@@ -72,5 +77,13 @@ public class User {
 
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    public Vendor getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(Vendor vendor) {
+        this.vendor = vendor;
     }
 }

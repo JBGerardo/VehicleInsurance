@@ -4,6 +4,8 @@ package Java_Project.Vehicle_Insurance_Management.controller;
 import Java_Project.Vehicle_Insurance_Management.model.Claim;
 import Java_Project.Vehicle_Insurance_Management.model.InsurancePolicy;
 import Java_Project.Vehicle_Insurance_Management.model.User;
+import Java_Project.Vehicle_Insurance_Management.model.Vendor;
+import Java_Project.Vehicle_Insurance_Management.repository.VendorRepository;
 import Java_Project.Vehicle_Insurance_Management.service.PolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,8 @@ public class ClaimController {
 
     private final UserRepository userRepository;
     private final ClaimRepository claimRepository;
+    @Autowired
+    private VendorRepository vendorRepository;
 
     @Autowired
     public ClaimController(PolicyService policyService,
@@ -56,7 +60,7 @@ public class ClaimController {
             }
         }
 
-        List<String> vendors = List.of("AutoFix Center", "DriveWell Repairs", "Speedy Garage", "ProMech Auto");
+        List<Vendor> vendors = vendorRepository.findByStatusIgnoreCase("Active");
 
         model.addAttribute("policies", policies);
         model.addAttribute("policyClaimTypes", policyClaimTypes); // ✅ New map

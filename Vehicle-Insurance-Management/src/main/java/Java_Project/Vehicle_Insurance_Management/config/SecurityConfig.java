@@ -32,13 +32,18 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register", "/register-step1", "/register-step2", "/register-final", "/forgot-password", "/css/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")  // Admin role should be required for the admin pages
+                        .requestMatchers(
+                                "/register", "/register-step1", "/register-step2", "/register-final",
+                                "/partner-register",  // ✅ Allow access to vendor registration form
+                                "/css/**", "/js/**", "/images/**",
+                                "/forgot-password"
+                        ).permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .successHandler(successHandler)  // Custom Success Handler here
+                        .successHandler(successHandler)
                         .permitAll()
                 )
                 .logout(logout -> logout

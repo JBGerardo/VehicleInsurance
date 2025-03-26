@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Manage Users</title>
+    <title>Manage Vendors</title>
     <link rel="stylesheet" th:href="@{/css/Admin/admin_profile_style.css}">
     <style>
         body {
@@ -95,7 +95,7 @@
             background-color: #e53935;
         }
 
-        .no-users {
+        .no-vendors {
             text-align: center;
             padding: 20px;
             color: #777;
@@ -127,52 +127,47 @@
     <div class="sidebar">
         <a th:href="@{/admin/dashboard}">Profile Details</a>
         <a th:href="@{/admin/manage-members}">Manage Members</a>
-        <a th:href="@{/admin/manage-users}" class="active">Manage Users</a>
+        <a th:href="@{/admin/manage-users}">Manage Users</a>
         <a th:href="@{/admin/manage-policies}">Manage Policies</a>
         <a th:href="@{/admin/manage-claims}">Manage Claims</a>
         <a th:href="@{/admin/view-payments}">View Payments</a>
-        <a th:href="@{/admin/manage-vendors}">Manage Vendors</a> <!-- ✅ New Vendor Menu -->
+        <a th:href="@{/admin/manage-vendors}" class="active">Manage Vendors</a>
         <a th:href="@{/admin/generate-report}">Generate Report</a>
     </div>
 
     <div class="container">
-        <h2>Manage Users</h2>
+        <h2>Manage Vendors</h2>
 
-        <!-- Search bar -->
-        <form action="#" th:action="@{/admin/manage-users}" method="get">
-            <input type="text" id="searchBar" class="search-bar" placeholder="Search by Username" name="search" th:value="${searchQuery}" />
+        <form th:action="@{/admin/manage-vendors}" method="get">
+            <input type="text" class="search-bar" placeholder="Search by Vendor Name" name="search" th:value="${searchQuery}" />
             <button type="submit">Search</button>
         </form>
 
         <div class="table-container">
-            <table class="user-table">
+            <table class="vendor-table">
                 <thead>
                 <tr>
-                    <th>Username</th>
-                    <th>Role</th>
-                    <th>Name</th>
+                    <th>Vendor Name</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="user : ${filteredUsers}">
-                    <td th:text="${user.username != null ? user.username : 'No Username'}">Username</td>
-                    <td th:text="${user.isAdmin ? 'Admin' : 'User'}">Role</td>
-                    <td th:text="${user.member != null ? user.member.firstName + ' ' + user.member.lastName : 'No Member'}">Member Name</td>
+                <tr th:each="vendor : ${filteredVendors}">
+                    <td th:text="${vendor.name != null ? vendor.name : 'N/A'}">Vendor Name</td>
+                    <td th:text="${vendor.status != null ? vendor.status : 'N/A'}">Status</td>
                     <td>
-                        <a th:href="@{'/admin/manage-users/edit/' + ${user.id}}" class="btn-edit">Edit</a>
-                        <a th:href="@{'/admin/manage-users/delete/' + ${user.id}}" class="btn-delete">Delete</a>
+                        <a th:href="@{'/admin/manage-vendors/edit/' + ${vendor.id}}" class="btn-edit">Edit</a>
+                        <a th:href="@{'/admin/manage-vendors/delete/' + ${vendor.id}}" class="btn-delete">Delete</a>
                     </td>
                 </tr>
 
-                <tr th:if="${#lists.isEmpty(filteredUsers)}">
-                    <td colspan="5" class="no-users">No users found.</td>
+                <tr th:if="${#lists.isEmpty(filteredVendors)}">
+                    <td colspan="3" class="no-vendors">No vendors found.</td>
                 </tr>
-
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>
 
