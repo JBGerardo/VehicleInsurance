@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Member</title>
+    <link rel="stylesheet" th:href="@{/css/Admin/admin_profile_style.css}">
+    <style>
+        /* Add your custom styles here */
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+        }
+
+        .layout {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #a6dce2;
+            padding: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: black;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar a.active {
+            background-color: #e3f2ff;
+            border-left: 4px solid #007bff;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .container {
+            flex-grow: 1;
+            padding: 40px;
+            background-color: #f5f7fa;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .btn-save {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .btn-save:hover {
+            background-color: #45a049;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <h1>VEHICLE INSURANCE MANAGEMENT</h1>
+    <div class="navbar">
+        <a th:href="@{/admin/dashboard}" class="active">Admin Profile</a>
+        <a href="#">Policy</a>
+        <a href="#">Claim</a>
+        <a href="#">Payment</a>
+        <a href="#" th:href="@{/logout}">Sign Out</a>
+    </div>
+</div>
+
+<div class="layout">
+    <div class="sidebar">
+        <a th:href="@{/admin/dashboard}">Profile Details</a>
+        <a th:href="@{/admin/manage-users}" class="active">Manage Users</a>
+        <a th:href="@{/admin/manage-policies}">Manage Policies</a>
+        <a th:href="@{/admin/manage-claims}">Manage Claims</a>
+        <a th:href="@{/admin/view-payments}">View Payments</a>
+        <a th:href="@{/admin/generate-report}">Generate Report</a>
+    </div>
+
+    <div class="container">
+        <h2>Edit Member</h2>
+
+        <!-- Member Edit Form -->
+        <form action="#" th:action="@{/admin/manage-users/edit/{id}(id=${member.id})}" method="post">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" th:value="${member.firstName}" />
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" th:value="${member.lastName}" />
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" th:value="${member.email}" />
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" class="form-control" id="phone" name="phone" th:value="${member.phone}" />
+            </div>
+
+            <div class="form-group">
+                <label for="street">Street</label>
+                <input type="text" class="form-control" id="street" name="street" th:value="${member.street}" />
+            </div>
+
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" class="form-control" id="city" name="city" th:value="${member.city}" />
+            </div>
+
+            <div class="form-group">
+                <label for="province">Province</label>
+                <input type="text" class="form-control" id="province" name="province" th:value="${member.province}" />
+            </div>
+
+            <div class="form-group">
+                <label for="postalCode">Postal Code</label>
+                <input type="text" class="form-control" id="postalCode" name="postalCode" th:value="${member.postalCode}" />
+            </div>
+
+            <button type="submit" class="btn-save">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
