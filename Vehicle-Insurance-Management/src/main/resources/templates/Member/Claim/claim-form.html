@@ -106,7 +106,7 @@
         <label for="vendor">Repair Shop / Vendor:</label>
         <select name="vendor" id="vendor" required>
             <option value="" disabled selected>Select a vendor</option>
-            <option th:each="vendor : ${vendors}" th:value="${vendor}" th:text="${vendor}"></option>
+            <option th:each="vendor : ${vendors}" th:value="${vendor.name}" th:text="${vendor.name}">Vendor</option>
         </select>
 
         <label for="description">Claim Description:</label>
