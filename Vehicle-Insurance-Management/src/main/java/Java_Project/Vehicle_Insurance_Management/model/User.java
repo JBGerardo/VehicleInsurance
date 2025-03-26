@@ -14,7 +14,11 @@ public class User {
     private String password;
 
     @Column(name = "is_admin", nullable = false)
-    private boolean isAdmin = false;  // default to false
+    private boolean isAdmin = false;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private UserRole role = UserRole.USER; // ✅ Default to USER
 
     @OneToOne
     @JoinColumn(name = "member_id", referencedColumnName = "id")
@@ -52,6 +56,14 @@ public class User {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
     public Member getMember() {

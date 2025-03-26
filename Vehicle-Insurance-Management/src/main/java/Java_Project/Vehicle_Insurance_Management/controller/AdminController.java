@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -53,7 +54,7 @@ public class AdminController {
 
         model.addAttribute("searchQuery", searchQuery);  // Pass search query to the view
         model.addAttribute("filteredMembers", members);  // Pass filtered members to the view
-        return "Administrator/ManageUser/manage-member-table";  // Return to the manage members page
+        return "Administrator/ManageMember/manage-member-table";  // Return to the manage members page
     }
 
     @GetMapping("/manage-members/edit/{id}")
@@ -62,10 +63,10 @@ public class AdminController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid member ID: " + id));
 
         model.addAttribute("member", member);
-        return "Administrator/ManageUser/manage-member-edit";
+        return "Administrator/ManageMember/manage-member-edit";
     }
 
-    @PostMapping("/manage-users/edit/{id}")
+    @PostMapping("/manage-members/edit/{id}")
     public String updateMember(@PathVariable("id") Long memberId, @ModelAttribute("member") Member member, Model model) {
         Member existingMember = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid member ID: " + memberId));
@@ -110,8 +111,58 @@ public class AdminController {
         return "redirect:/admin/manage-members";  // Redirect back to the manage members page
     }
 
+    @GetMapping("/manage-users")
+    public String manageUsers(@RequestParam(value = "search", required = false) String searchQuery, Model model) {
+        List<User> filteredUsers;
 
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            filteredUsers = userRepository.findByUsernameContainingIgnoreCase(searchQuery);
+        } else {
+            filteredUsers = userRepository.findAll();
+        }
 
+        model.addAttribute("filteredUsers", filteredUsers);
+        model.addAttribute("searchQuery", searchQuery);
+
+        return "Administrator/ManageUser/manage-user-table";
+    }
+
+    // Show the edit form
+    @GetMapping("/manage-users/edit/{id}")
+    public String showEditUserForm(@PathVariable Long id, Model model) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            model.addAttribute("user", optionalUser.get());
+            return "Administrator/ManageUser/manage-user-edit"; // match your folder structure
+        } else {
+            return "redirect:/admin/manage-users"; // or a 404 page if user not found
+        }
+    }
+
+    @PostMapping("/manage-users/edit/{id}")
+    public String updateUser(@PathVariable Long id, @ModelAttribute("user") User updatedUser) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setUsername(updatedUser.getUsername());
+            user.setAdmin(updatedUser.isAdmin());
+            user.setRole(updatedUser.getRole()); // ✅ Add this line
+
+            // (Optional) Add any additional logic, e.g., sync isAdmin based on role
+
+            userRepository.save(user);
+        }
+
+        return "redirect:/admin/manage-users";
+    }
+
+    @GetMapping("/manage-users/delete/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+        }
+        return "redirect:/admin/manage-users";
+    }
 }
 
 
