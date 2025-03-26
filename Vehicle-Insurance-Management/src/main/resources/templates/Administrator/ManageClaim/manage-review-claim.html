@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Review Claim</title>
+    <link rel="stylesheet" th:href="@{/css/Admin/admin_profile_style.css}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+        }
+
+        .layout {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #a6dce2;
+            padding: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: black;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar a.active {
+            background-color: #e3f2ff;
+            border-left: 4px solid #007bff;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .container {
+            flex-grow: 1;
+            padding: 40px;
+            background-color: #f5f7fa;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .btn-save {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .btn-save:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <h1>VEHICLE INSURANCE MANAGEMENT</h1>
+    <div class="navbar">
+        <a th:href="@{/admin/dashboard}">Admin Profile</a>
+        <a href="#">Policy</a>
+        <a class="active" href="#">Claim</a>
+        <a href="#">Payment</a>
+        <a th:href="@{/logout}">Sign Out</a>
+    </div>
+</div>
+
+<div class="layout">
+    <div class="sidebar">
+        <a th:href="@{/admin/dashboard}">Profile Details</a>
+        <a th:href="@{/admin/manage-members}">Manage Members</a>
+        <a th:href="@{/admin/manage-users}">Manage Users</a>
+        <a th:href="@{/admin/manage-policies}">Manage Policies</a>
+        <a th:href="@{/admin/manage-claims}" class="active">Manage Claims</a>
+        <a th:href="@{/admin/view-payments}">View Payments</a>
+        <a th:href="@{/admin/generate-report}">Generate Report</a>
+    </div>
+
+    <div class="container">
+        <h2>Review Claim</h2>
+
+        <!-- Claim Review Form -->
+        <form th:action="@{/admin/manage-claims/review/{id}(id=${claim.id})}" method="post">
+            <div class="form-group">
+                <label for="type">Claim Type</label>
+                <input type="text" class="form-control" id="type" name="type" th:value="${claim.type}" readonly />
+            </div>
+
+            <div class="form-group">
+                <label for="vehicleDetails">Vehicle Details</label>
+                <input type="text" class="form-control" id="vehicleDetails" name="vehicleDetails" th:value="${claim.vehicleDetails}" readonly />
+            </div>
+
+            <div class="form-group">
+                <label for="vendor">Vendor</label>
+                <input type="text" class="form-control" id="vendor" name="vendor" th:value="${claim.vendor}" readonly />
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="4" readonly th:text="${claim.description}"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Claim Status</label>
+                <select id="status" name="status" class="form-control">
+                    <option th:value="'Pending'" th:selected="${claim.status == 'Pending'}">Pending</option>
+                    <option th:value="'Approved'" th:selected="${claim.status == 'Approved'}">Approved</option>
+                    <option th:value="'Rejected'" th:selected="${claim.status == 'Rejected'}">Rejected</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="vendorStatus">Vendor Status</label>
+                <select id="vendorStatus" name="vendorStatus" class="form-control" disabled>
+                    <option th:value="'Pending'" th:selected="${claim.vendorStatus == 'Pending'}">Pending</option>
+                    <option th:value="'In Progress'" th:selected="${claim.vendorStatus == 'In Progress'}">In Progress</option>
+                    <option th:value="'Resolved'" th:selected="${claim.vendorStatus == 'Resolved'}">Resolved</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-save">Update Claim</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

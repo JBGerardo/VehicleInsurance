@@ -24,6 +24,9 @@ public class Claim {
 
     private String vendor;
 
+    @Column(name = "vendor_status")
+    private String vendorStatus;
+
     // 🔗 Relationship to Member
     @ManyToOne
     @JoinColumn(name = "member_id") // Update the foreign key column name to member_id
@@ -38,6 +41,10 @@ public class Claim {
     @ManyToOne
     @JoinColumn(name = "policy_id")
     private InsurancePolicy policy;
+
+    @ManyToOne
+    @JoinColumn(name = "approver_id")
+    private User approver;
 
     // --- Getters and Setters ---
     public Long getId() {
@@ -111,4 +118,27 @@ public class Claim {
     public void setPolicy(InsurancePolicy policy) {
         this.policy = policy;
     }
+
+    public String getVendorStatus() {
+        return vendorStatus;
+    }
+
+    public void setVendorStatus(String vendorStatus) {
+        this.vendorStatus = vendorStatus;
+    }
+    public Member getMember() {
+        return member;
+    }
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public User getApprover() {
+        return approver;
+    }
+
+    public void setApprover(User approver) {
+        this.approver = approver;
+    }
+
 }
