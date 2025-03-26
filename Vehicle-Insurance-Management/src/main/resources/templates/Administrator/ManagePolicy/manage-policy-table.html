@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Policies</title>
+    <link rel="stylesheet" th:href="@{/css/Admin/admin_profile_style.css}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+        }
+
+        .layout {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #a6dce2;
+            padding: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: black;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar a.active {
+            background-color: #e3f2ff;
+            border-left: 4px solid #007bff;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .container {
+            flex-grow: 1;
+            padding: 40px;
+            background-color: #f5f7fa;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        th, td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-edit, .btn-delete {
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-edit {
+            background-color: #4CAF50;
+        }
+
+        .btn-edit:hover {
+            background-color: #45a049;
+        }
+
+        .btn-delete {
+            background-color: #f44336;
+        }
+
+        .btn-delete:hover {
+            background-color: #e53935;
+        }
+
+        .no-policies {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+            padding: 10px;
+            width: 250px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px; /* ⬅ spacing between buttons */
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <h1>VEHICLE INSURANCE MANAGEMENT</h1>
+    <div class="navbar">
+        <a th:href="@{/admin/dashboard}">Admin Profile</a>
+        <a th:href="@{/admin/manage-policies}" class="active">Policy</a>
+        <a href="#">Claim</a>
+        <a href="#">Payment</a>
+        <a th:href="@{/logout}">Sign Out</a>
+    </div>
+</div>
+
+<div class="layout">
+    <div class="sidebar">
+        <a th:href="@{/admin/dashboard}">Profile Details</a>
+        <a th:href="@{/admin/manage-members}">Manage Members</a>
+        <a th:href="@{/admin/manage-users}">Manage Users</a>
+        <a th:href="@{/admin/manage-policies}" class="active">Manage Policies</a>
+        <a th:href="@{/admin/manage-claims}">Manage Claims</a>
+        <a th:href="@{/admin/view-payments}">View Payments</a>
+        <a th:href="@{/admin/generate-report}">Generate Report</a>
+    </div>
+
+    <div class="container">
+        <h2>Manage Policies</h2>
+
+        <!-- Search bar -->
+        <form action="#" th:action="@{/admin/manage-policies}" method="get">
+            <input type="text" class="search-bar" placeholder="Search by Policy Name" name="search" th:value="${searchQuery}" />
+            <button type="submit">Search</button>
+        </form>
+
+        <div class="table-container">
+            <table class="policy-table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Coverage</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="policy : ${filteredPolicies}">
+                    <td th:text="${policy.name}">Policy Name</td>
+                    <td th:text="${policy.description}">Description</td>
+                    <td th:text="${policy.coverage}">Coverage</td>
+                    <td th:text="${policy.price}">1200.00</td>
+                    <td>
+                        <div class="action-buttons">
+                            <a th:href="@{'/admin/manage-policies/edit/' + ${policy.id}}" class="btn-edit">Edit</a>
+                            <a th:href="@{'/admin/manage-policies/delete/' + ${policy.id}}" class="btn-delete" style="display: none;">Delete</a>
+                        </div>
+                    </td>
+
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(filteredPolicies)}">
+                    <td colspan="5" class="no-policies">No policies found.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

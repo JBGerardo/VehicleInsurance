@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Policy</title>
+    <link rel="stylesheet" th:href="@{/css/Admin/admin_profile_style.css}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+        }
+
+        .layout {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #a6dce2;
+            padding: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: black;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar a.active {
+            background-color: #e3f2ff;
+            border-left: 4px solid #007bff;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .container {
+            flex-grow: 1;
+            padding: 40px;
+            background-color: #f5f7fa;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .btn-save {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .btn-save:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <h1>VEHICLE INSURANCE MANAGEMENT</h1>
+    <div class="navbar">
+        <a th:href="@{/admin/dashboard}">Admin Profile</a>
+        <a th:href="@{/admin/manage-policies}" class="active">Policy</a>
+        <a href="#">Claim</a>
+        <a href="#">Payment</a>
+        <a th:href="@{/logout}">Sign Out</a>
+    </div>
+</div>
+
+<div class="layout">
+    <div class="sidebar">
+        <a th:href="@{/admin/dashboard}">Profile Details</a>
+        <a th:href="@{/admin/manage-members}">Manage Members</a>
+        <a th:href="@{/admin/manage-users}">Manage Users</a>
+        <a th:href="@{/admin/manage-policies}" class="active">Manage Policies</a>
+        <a th:href="@{/admin/manage-claims}">Manage Claims</a>
+        <a th:href="@{/admin/view-payments}">View Payments</a>
+        <a th:href="@{/admin/generate-report}">Generate Report</a>
+    </div>
+
+    <div class="container">
+        <h2>Edit Policy</h2>
+
+        <!-- Policy Edit Form -->
+        <form th:action="@{/admin/manage-policies/edit/{id}(id=${policy.id})}" method="post">
+            <div class="form-group">
+                <label for="name">Policy Name</label>
+                <input type="text" class="form-control" id="name" name="name" th:value="${policy.name}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3"
+                          th:text="${policy.description}"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="coverage">Coverage</label>
+                <textarea class="form-control" id="coverage" name="coverage" rows="2"
+                          th:text="${policy.coverage}"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" class="form-control" id="price" name="price" step="0.01"
+                       th:value="${policy.price}" required />
+            </div>
+
+            <button type="submit" class="btn-save">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
