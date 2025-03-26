@@ -18,7 +18,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private UserRole role = UserRole.USER; // ✅ Default to USER
+    private UserRole role = UserRole.ROLE_USER;// ✅ Default to USER
 
     @OneToOne
     @JoinColumn(name = "member_id", referencedColumnName = "id")

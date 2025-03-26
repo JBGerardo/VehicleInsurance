@@ -3,6 +3,7 @@ package Java_Project.Vehicle_Insurance_Management.controller;
 import Java_Project.Vehicle_Insurance_Management.model.Claim;
 import Java_Project.Vehicle_Insurance_Management.model.Member;
 import Java_Project.Vehicle_Insurance_Management.model.User;
+import Java_Project.Vehicle_Insurance_Management.model.UserRole;
 import Java_Project.Vehicle_Insurance_Management.repository.ClaimRepository;
 import Java_Project.Vehicle_Insurance_Management.repository.MemberRepository;
 import Java_Project.Vehicle_Insurance_Management.repository.UserRepository;
@@ -145,16 +146,25 @@ public class AdminController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setUsername(updatedUser.getUsername());
-            user.setAdmin(updatedUser.isAdmin());
-            user.setRole(updatedUser.getRole()); // ✅ Add this line
 
-            // (Optional) Add any additional logic, e.g., sync isAdmin based on role
+            // Sync isAdmin and role together
+            boolean isAdmin = updatedUser.isAdmin();
+            user.setAdmin(isAdmin);
+
+            if (isAdmin) {
+                user.setRole(UserRole.ROLE_ADMIN);
+            } else {
+                // Keep the role from form input, or default to ROLE_USER if not set
+                UserRole role = updatedUser.getRole() != null ? updatedUser.getRole() : UserRole.ROLE_USER;
+                user.setRole(role);
+            }
 
             userRepository.save(user);
         }
 
         return "redirect:/admin/manage-users";
     }
+
 
     @GetMapping("/manage-users/delete/{id}")
     public String deleteUser(@PathVariable Long id) {

@@ -20,10 +20,10 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class SecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
-    private final CustomAuthenticationSuccessHandler successHandler;
+    private final AuthenticationSuccessHandler successHandler;
 
     public SecurityConfig(CustomUserDetailsService customUserDetailsService,
-                          CustomAuthenticationSuccessHandler successHandler) {
+                          AuthenticationSuccessHandler successHandler) {
         this.customUserDetailsService = customUserDetailsService;
         this.successHandler = successHandler;
     }
@@ -32,20 +32,30 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
+                        // Publicly accessible pages
                         .requestMatchers(
                                 "/register", "/register-step1", "/register-step2", "/register-final",
-                                "/partner-register",  // ✅ Allow access to vendor registration form
+                                "/partner-register",          // ✅ Vendor registration
                                 "/css/**", "/js/**", "/images/**",
-                                "/forgot-password"
+                                "/forgot-password", "/login"
                         ).permitAll()
+
+                        // Admin-only pages
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                        // Vendor-only pages (optional, include if you have a vendor dashboard)
+                        .requestMatchers("/vendor/**").hasRole("VENDOR")
+
+                        // Any other request must be authenticated
                         .anyRequest().authenticated()
                 )
+
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .successHandler(successHandler)
+                        .successHandler(successHandler) // 🔁 Custom success handler handles redirection
                         .permitAll()
                 )
+
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
@@ -54,14 +64,13 @@ public class SecurityConfig {
         return http.build();
     }
 
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+    public AuthenticationManager authManager() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(customUserDetailsService);
         provider.setPasswordEncoder(passwordEncoder());

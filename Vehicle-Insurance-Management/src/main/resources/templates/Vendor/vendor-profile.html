@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vendor Page - Profile</title>
+    <link rel="stylesheet" th:href="@{/css/Admin/admin_profile_style.css}">
+</head>
+<body>
+
+<div class="topbar">
+    <h1>VEHICLE INSURANCE MANAGEMENT</h1>
+    <div class="navbar">
+        <a th:href="@{/vendor/dashboard}" class="active">Vendor Profile</a>
+        <a href="#">Claims</a>
+        <a href="#">Invoices</a>
+        <a th:href="@{/logout}">Sign Out</a>
+    </div>
+</div>
+
+<div class="layout">
+    <div class="sidebar">
+        <a href="#" class="active">Profile Details</a>
+        <a th:href="@{/vendor/view-claims}">View Claims</a>
+        <a th:href="@{/vendor/manage-invoices}">Manage Invoices</a>
+        <a th:href="@{/vendor/contact-admin}">Contact Admin</a>
+    </div>
+
+    <div class="main-content">
+        <div class="profile-box">
+            <h2>Welcome! <span th:text="${vendor.name}">AutoFix Center</span></h2>
+            <div class="profile-header">
+                <h3>Vendor Profile Details</h3>
+                <!-- Add an edit page only if you implement it -->
+                <!-- <a th:href="@{/vendor/profile/edit}" class="edit-button">Edit</a> -->
+            </div>
+
+            <div class="form-group">
+                <label>Company Name:</label>
+                <div class="field" th:text="${vendor.name}">AutoFix Center</div>
+            </div>
+
+            <div class="form-group">
+                <label>Status:</label>
+                <div class="field" th:text="${vendor.status}">Active</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
