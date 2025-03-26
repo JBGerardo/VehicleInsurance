@@ -20,23 +20,21 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // Check if user exists
         Java_Project.Vehicle_Insurance_Management.model.User user = userRepository.findByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
 
-        // Assign ROLE_ADMIN if isAdmin is true, else assign ROLE_USER
-        List<GrantedAuthority> authorities = List.of(
-                new SimpleGrantedAuthority(user.isAdmin() ? "ROLE_ADMIN" : "ROLE_USER")
+        List<GrantedAuthority> authorities = Collections.singletonList(
+                new SimpleGrantedAuthority(user.getRole().name()) // enum to String
         );
 
-        // Return user details with authorities
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
                 authorities
         );
     }
+
 }

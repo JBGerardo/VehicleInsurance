@@ -1,10 +1,12 @@
 package Java_Project.Vehicle_Insurance_Management.controller;
 
 import Java_Project.Vehicle_Insurance_Management.model.User;
+import Java_Project.Vehicle_Insurance_Management.model.UserRole;
 import Java_Project.Vehicle_Insurance_Management.model.Vendor;
 import Java_Project.Vehicle_Insurance_Management.repository.UserRepository;
 import Java_Project.Vehicle_Insurance_Management.repository.VendorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,9 @@ public class VendorRegistrationController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // ✅ Show vendor sign-up form
     @GetMapping("/partner-register")
@@ -37,11 +42,16 @@ public class VendorRegistrationController {
             return "vendor-register";
         }
 
-        vendor.setStatus("Pending"); // New vendors default to 'Pending'
+        // Save the vendor (with default status "Pending")
+        vendor.setStatus("Pending");
         Vendor savedVendor = vendorRepository.save(vendor);
 
-        user.setVendor(savedVendor); // Optional: if User has a Vendor relationship
-        user.setAdmin(false);        // Vendors are not admins
+        // Prepare the User account
+        user.setVendor(savedVendor);             // Link vendor profile
+        user.setAdmin(false);                    // Not an admin
+        user.setRole(UserRole.ROLE_VENDOR);      // ✅ Set role
+        user.setPassword(passwordEncoder.encode(user.getPassword())); // ✅ Encrypt password
+
         userRepository.save(user);
 
         model.addAttribute("message", "Vendor application submitted successfully!");
