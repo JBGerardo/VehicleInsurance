@@ -9,5 +9,7 @@ public interface ClaimRepository extends JpaRepository<Claim, Long> {
     List<Claim> findByUserId(Long userId);
     List<Claim> findByPolicyId(Long policyId);
     public void deleteByUserId(Long userId);
+    List<Claim> findByTypeContainingIgnoreCase(String type);
+
 
 }

@@ -78,9 +78,11 @@ public class ClaimController {
 
         Claim claim = new Claim();
         claim.setUser(user);
+        claim.setMember(user.getMember()); // ✅ link member here
         claim.setPolicy(policy);
         claim.setVehicleDetails(vehicleDetails);
         claim.setType(claimType);
+        claim.setVendorStatus("Pending"); // ✅ Initial vendor status
         claim.setVendor(vendor);
         claim.setDescription(description);
         claim.setStatus("Pending");

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Claims</title>
+    <link rel="stylesheet" th:href="@{/css/Admin/admin_profile_style.css}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+        }
+
+        .layout {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #a6dce2;
+            padding: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: black;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar a.active {
+            background-color: #e3f2ff;
+            border-left: 4px solid #007bff;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .container {
+            flex-grow: 1;
+            padding: 40px;
+            background-color: #f5f7fa;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        th, td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-edit, .btn-delete {
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-edit {
+            background-color: #4CAF50;
+            margin-right: 6px;
+        }
+
+        .btn-edit:hover {
+            background-color: #45a049;
+        }
+
+        .btn-delete {
+            background-color: #f44336;
+        }
+
+        .btn-delete:hover {
+            background-color: #e53935;
+        }
+
+        .no-claims {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+            padding: 10px;
+            width: 250px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <h1>VEHICLE INSURANCE MANAGEMENT</h1>
+    <div class="navbar">
+        <a th:href="@{/admin/dashboard}">Admin Profile</a>
+        <a href="#">Policy</a>
+        <a th:href="@{/admin/manage-claims}" class="active">Claim</a>
+        <a href="#">Payment</a>
+        <a th:href="@{/logout}">Sign Out</a>
+    </div>
+</div>
+
+<div class="layout">
+    <div class="sidebar">
+        <a th:href="@{/admin/dashboard}">Profile Details</a>
+        <a th:href="@{/admin/manage-members}">Manage Members</a>
+        <a th:href="@{/admin/manage-users}">Manage Users</a>
+        <a th:href="@{/admin/manage-policies}">Manage Policies</a>
+        <a th:href="@{/admin/manage-claims}" class="active">Manage Claims</a>
+        <a th:href="@{/admin/view-payments}">View Payments</a>
+        <a th:href="@{/admin/generate-report}">Generate Report</a>
+    </div>
+
+    <div class="container">
+        <h2>Manage Claims</h2>
+
+        <form th:action="@{/admin/manage-claims}" method="get">
+            <input type="text" class="search-bar" placeholder="Search by Claim Type" name="search" th:value="${searchQuery}" />
+            <button type="submit">Search</button>
+        </form>
+
+        <div class="table-container">
+            <table class="claim-table">
+                <thead>
+                <tr>
+                    <th>Member Name</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Vendor Status</th>
+                    <th>Claim Date</th>
+                    <th>Vehicle Details</th>
+                    <th>Vendor</th>
+                    <th>Approver</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="claim : ${filteredClaims}">
+                    <td th:text="${claim.member != null ? claim.member.firstName + ' ' + claim.member.lastName : 'No Member'}">Member Name</td>
+                    <td th:text="${claim.type}">Type</td>
+                    <td th:text="${claim.status}">Status</td>
+                    <td th:text="${claim.vendorStatus}">Vendor Status</td>
+                    <td th:text="${claim.claimDate}">Claim Date</td>
+                    <td th:text="${claim.vehicleDetails}">Vehicle Info</td>
+                    <td th:text="${claim.vendor}">Vendor</td>
+                    <td th:text="${claim.approver != null ? claim.approver.username : 'Not Reviewed'}">Approver</td>
+                    <td>
+                        <div class="action-buttons">
+                            <a th:href="@{'/admin/manage-claims/review/' + ${claim.id}}" class="btn-edit">Review</a>
+                            <a th:href="@{'/admin/manage-claims/delete/' + ${claim.id}}" class="btn-delete">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(filteredClaims)}">
+                    <td colspan="9" class="no-claims">No claims found.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -150,6 +150,7 @@
                 <th>Vehicle</th>
                 <th>Vendor</th>
                 <th>Status</th>
+                <th>Vendor Status</th>
                 <th>Claim Date</th>
             </tr>
             </thead>
@@ -160,6 +161,7 @@
                 <td th:text="${claim.vehicleDetails}">Vehicle</td>
                 <td th:text="${claim.vendor}">Vendor</td>
                 <td><span th:text="${claim.status}" th:class="'status ' + ${claim.status}"></span></td>
+                <td th:text="${claim.vendorStatus}" th:class="'status ' + ${claim.vendorStatus}" >Pending</td>
                 <td th:text="${#temporals.format(claim.claimDate, 'yyyy-MM-dd')}">Date</td>
             </tr>
             <tr th:if="${#lists.isEmpty(claims)}">
