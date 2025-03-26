@@ -1,9 +1,9 @@
 package Java_Project.Vehicle_Insurance_Management.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Member {
@@ -19,6 +19,12 @@ public class Member {
     private String city;
     private String province;
     private String postalCode;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Claim> claims;  // This establishes the relationship with Claim
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private Set<User> users;
 
     public Long getId() {
         return id;
@@ -91,4 +97,13 @@ public class Member {
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
+
+    public List<Claim> getClaims() {
+        return claims;
+    }
+
+    public void setClaims(List<Claim> claims) {
+        this.claims = claims;
+    }
+
 }

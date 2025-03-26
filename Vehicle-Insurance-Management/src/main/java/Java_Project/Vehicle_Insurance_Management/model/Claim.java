@@ -24,6 +24,11 @@ public class Claim {
 
     private String vendor;
 
+    // 🔗 Relationship to Member
+    @ManyToOne
+    @JoinColumn(name = "member_id") // Update the foreign key column name to member_id
+    private Member member;
+
     // 🔗 Relationship to User
     @ManyToOne
     @JoinColumn(name = "user_id")

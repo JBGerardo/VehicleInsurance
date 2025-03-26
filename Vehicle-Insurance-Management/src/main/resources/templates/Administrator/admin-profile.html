@@ -10,18 +10,18 @@
 <div class="topbar">
     <h1>VEHICLE INSURANCE MANAGEMENT</h1>
     <div class="navbar">
-        <a href="#" class="active">Profile</a>
+        <a th:href="@{/admin/dashboard}" class="active">Admin Profile</a>
         <a href="#">Policy</a>
         <a href="#">Claim</a>
         <a href="#">Payment</a>
-        <a href="#">Sign Out</a>
+        <a href="#" th:href="@{/logout}">Sign Out</a>
     </div>
 </div>
 
 <div class="layout">
     <div class="sidebar">
         <a href="#" class="active">Profile Details</a>
-        <a href="#">Manage User</a>
+        <a th:href="@{/admin/manage-members}">Manage Members</a>
         <a href="#">Manage Policies</a>
         <a href="#">Manage Claims</a>
         <a href="#">View Payments</a>

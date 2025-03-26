@@ -11,4 +11,5 @@ public interface UserPolicyRepository extends JpaRepository<UserPolicy, Long> {
     List<UserPolicy> findByUser(User user);
     boolean existsByUserIdAndPolicyId(Long userId, Long policyId);
     List<UserPolicy> findByUserId(Long userId);
+
 }
