@@ -2,10 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Member</title>
+    <title>Edit User</title>
     <link rel="stylesheet" th:href="@{/css/Admin/admin_profile_style.css}">
     <style>
-        /* Add your custom styles here */
         body {
             font-family: 'Segoe UI', sans-serif;
             background-color: #e9ecef;
@@ -92,13 +91,14 @@
         <a href="#">Policy</a>
         <a href="#">Claim</a>
         <a href="#">Payment</a>
-        <a href="#" th:href="@{/logout}">Sign Out</a>
+        <a th:href="@{/logout}">Sign Out</a>
     </div>
 </div>
 
 <div class="layout">
     <div class="sidebar">
         <a th:href="@{/admin/dashboard}">Profile Details</a>
+        <a th:href="@{/admin/manage-members}">Manage Members</a>
         <a th:href="@{/admin/manage-users}" class="active">Manage Users</a>
         <a th:href="@{/admin/manage-policies}">Manage Policies</a>
         <a th:href="@{/admin/manage-claims}">Manage Claims</a>
@@ -107,48 +107,37 @@
     </div>
 
     <div class="container">
-        <h2>Edit Member</h2>
+        <h2>Edit User</h2>
 
-        <!-- Member Edit Form -->
-        <form action="#" th:action="@{/admin/manage-users/edit/{id}(id=${member.id})}" method="post">
+        <!-- User Edit Form -->
+        <form action="#" th:action="@{/admin/manage-users/edit/{id}(id=${user.id})}" method="post">
             <div class="form-group">
-                <label for="firstName">First Name</label>
-                <input type="text" class="form-control" id="firstName" name="firstName" th:value="${member.firstName}" />
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" th:value="${user.username}" required />
             </div>
 
             <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <input type="text" class="form-control" id="lastName" name="lastName" th:value="${member.lastName}" />
+                <label for="isAdmin">Is Admin</label>
+                <select id="isAdmin" name="admin" class="form-control" onchange="toggleRoleOptions(this.value)">
+                    <option th:value="true" th:selected="${user.admin}">Admin</option>
+                    <option th:value="false" th:selected="${!user.admin}">User</option>
+                </select>
             </div>
 
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" th:value="${member.email}" />
+                <label for="role">User Role</label>
+                <select id="role" name="role" class="form-control">
+                    <!-- All options rendered, JS will show/hide -->
+                    <option value="USER">User</option>
+                    <option value="VENDOR">Vendor</option>
+                </select>
             </div>
 
-            <div class="form-group">
-                <label for="phone">Phone</label>
-                <input type="text" class="form-control" id="phone" name="phone" th:value="${member.phone}" />
-            </div>
 
             <div class="form-group">
-                <label for="street">Street</label>
-                <input type="text" class="form-control" id="street" name="street" th:value="${member.street}" />
-            </div>
-
-            <div class="form-group">
-                <label for="city">City</label>
-                <input type="text" class="form-control" id="city" name="city" th:value="${member.city}" />
-            </div>
-
-            <div class="form-group">
-                <label for="province">Province</label>
-                <input type="text" class="form-control" id="province" name="province" th:value="${member.province}" />
-            </div>
-
-            <div class="form-group">
-                <label for="postalCode">Postal Code</label>
-                <input type="text" class="form-control" id="postalCode" name="postalCode" th:value="${member.postalCode}" />
+                <label for="memberId">Linked Member ID</label>
+                <input type="text" class="form-control" id="memberId" name="memberId"
+                       th:value="${user.member != null ? user.member.id : 'None'}" readonly />
             </div>
 
             <button type="submit" class="btn-save">Save Changes</button>
@@ -157,4 +146,34 @@
 </div>
 
 </body>
+
 </html>
+
+<script>
+    function toggleRoleOptions(adminValue) {
+        const roleSelect = document.getElementById("role");
+        const isAdmin = adminValue === "true";
+
+        for (let option of roleSelect.options) {
+            if (isAdmin) {
+                option.disabled = option.value !== "ADMIN";
+                if (option.value === "ADMIN") {
+                    roleSelect.value = "ADMIN";
+                }
+            } else {
+                option.disabled = option.value === "ADMIN";
+                if (roleSelect.value === "ADMIN") {
+                    roleSelect.value = "USER"; // default when switching from Admin
+                }
+            }
+        }
+
+        roleSelect.disabled = isAdmin; // lock it when admin
+    }
+
+    // Call on page load to initialize
+    document.addEventListener("DOMContentLoaded", function () {
+        toggleRoleOptions(document.getElementById("isAdmin").value);
+    });
+</script>
+
