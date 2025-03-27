@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Review Claim</title>
+    <link rel="stylesheet" th:href="@{/css/Admin/admin_profile_style.css}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .btn {
+            margin-top: 30px;
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .readonly {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Review Claim</h2>
+    <form th:action="@{'/vendor/claims/update/' + ${claim.id}}" method="post">
+        <label>Policy Name:</label>
+        <input type="text" th:value="${claim.policy.name}" class="readonly" readonly>
+
+        <label>Member:</label>
+        <input type="text" th:value="${claim.member.firstName + ' ' + claim.member.lastName}" class="readonly" readonly>
+
+        <label>Claim Type:</label>
+        <input type="text" th:value="${claim.type}" class="readonly" readonly>
+
+        <label>Vehicle Details:</label>
+        <input type="text" th:value="${claim.vehicleDetails}" class="readonly" readonly>
+
+        <label>Description:</label>
+        <textarea readonly class="readonly" th:text="${claim.description}"></textarea>
+
+        <label>Vendor Status:</label>
+        <select name="vendorStatus" required>
+            <option th:selected="${claim.vendorStatus == 'Pending'}" value="Pending">Pending</option>
+            <option th:selected="${claim.vendorStatus == 'In Progress'}" value="In Progress">In Progress</option>
+            <option th:selected="${claim.vendorStatus == 'Completed'}" value="Completed">Completed</option>
+        </select>
+
+        <label>Vendor Notes:</label>
+        <textarea name="vendorNotes" placeholder="Add your notes... (optional)"></textarea>
+
+        <button type="submit" class="btn">Submit Review</button>
+    </form>
+</div>
+
+</body>
+</html>

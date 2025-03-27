@@ -54,17 +54,16 @@ public class AdminClaimController {
 
     @PostMapping("/review/{id}")
     public String updateClaim(@PathVariable Long id,
-                              @ModelAttribute("claim") Claim updatedClaim,
+                              @RequestParam("status") String status,
                               Principal principal) {
         Optional<Claim> optionalClaim = claimRepository.findById(id);
         if (optionalClaim.isPresent()) {
             Claim claim = optionalClaim.get();
 
-            // ✅ Update only what's allowed
-            claim.setStatus(updatedClaim.getStatus());
-            claim.setVendorStatus(updatedClaim.getVendorStatus());
+            // ✅ Only update status
+            claim.setStatus(status);
 
-            // ✅ Set the approver using the logged-in admin's username
+            // ✅ Preserve vendor status and other fields
             User approver = userRepository.findByUsername(principal.getName());
             claim.setApprover(approver);
 
@@ -73,6 +72,7 @@ public class AdminClaimController {
 
         return "redirect:/admin/manage-claims";
     }
+
 
 
     // Delete claim

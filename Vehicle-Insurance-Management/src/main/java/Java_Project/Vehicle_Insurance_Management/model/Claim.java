@@ -22,7 +22,10 @@ public class Claim {
 
     private String vehicleDetails;
 
-    private String vendor;
+    @ManyToOne
+    @JoinColumn(name = "vendor_id")
+    private Vendor vendor;
+
 
     @Column(name = "vendor_status")
     private String vendorStatus;
@@ -95,11 +98,11 @@ public class Claim {
         this.vehicleDetails = vehicleDetails;
     }
 
-    public String getVendor() {
+    public Vendor getVendor() {
         return vendor;
     }
 
-    public void setVendor(String vendor) {
+    public void setVendor(Vendor vendor) {
         this.vendor = vendor;
     }
 
