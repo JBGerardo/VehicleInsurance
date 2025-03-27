@@ -27,7 +27,11 @@
 
     <div class="main-content">
         <div class="profile-box">
-            <h2>Welcome! <span th:text="${vendor.name}">AutoFix Center</span></h2>
+
+            <h2>Welcome,
+                <span th:if="${vendor != null}" th:text="${vendor.name}">[Missing]</span>
+                <span th:unless="${vendor != null}">Vendor not found</span>
+            </h2>
             <div class="profile-header">
                 <h3>Vendor Profile Details</h3>
                 <!-- Add an edit page only if you implement it -->
