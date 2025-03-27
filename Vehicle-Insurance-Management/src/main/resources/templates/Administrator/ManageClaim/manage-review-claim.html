@@ -108,47 +108,44 @@
     <div class="container">
         <h2>Review Claim</h2>
 
-        <!-- Claim Review Form -->
         <form th:action="@{/admin/manage-claims/review/{id}(id=${claim.id})}" method="post">
             <div class="form-group">
-                <label for="type">Claim Type</label>
-                <input type="text" class="form-control" id="type" name="type" th:value="${claim.type}" readonly />
+                <label>Claim Type</label>
+                <input type="text" class="form-control" th:value="${claim.type}" readonly />
             </div>
 
             <div class="form-group">
-                <label for="vehicleDetails">Vehicle Details</label>
-                <input type="text" class="form-control" id="vehicleDetails" name="vehicleDetails" th:value="${claim.vehicleDetails}" readonly />
+                <label>Vehicle Details</label>
+                <input type="text" class="form-control" th:value="${claim.vehicleDetails}" readonly />
             </div>
 
             <div class="form-group">
-                <label for="vendor">Vendor</label>
-                <input type="text" class="form-control" id="vendor" name="vendor" th:value="${claim.vendor}" readonly />
+                <label>Vendor</label>
+                <input type="text" class="form-control" th:value="${claim.vendor.name}" readonly />
             </div>
 
             <div class="form-group">
-                <label for="description">Description</label>
-                <textarea class="form-control" id="description" name="description" rows="4" readonly th:text="${claim.description}"></textarea>
+                <label>Description</label>
+                <textarea class="form-control" readonly th:text="${claim.description}" rows="4"></textarea>
             </div>
 
             <div class="form-group">
                 <label for="status">Claim Status</label>
                 <select id="status" name="status" class="form-control">
-                    <option th:value="'Pending'" th:selected="${claim.status == 'Pending'}">Pending</option>
-                    <option th:value="'Approved'" th:selected="${claim.status == 'Approved'}">Approved</option>
-                    <option th:value="'Rejected'" th:selected="${claim.status == 'Rejected'}">Rejected</option>
+                    <option th:selected="${claim.status == 'Pending'}" value="Pending">Pending</option>
+                    <option th:selected="${claim.status == 'Approved'}" value="Approved">Approved</option>
+                    <option th:selected="${claim.status == 'Rejected'}" value="Rejected">Rejected</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="vendorStatus">Vendor Status</label>
-                <select id="vendorStatus" name="vendorStatus" class="form-control" disabled>
-                    <option th:value="'Pending'" th:selected="${claim.vendorStatus == 'Pending'}">Pending</option>
-                    <option th:value="'In Progress'" th:selected="${claim.vendorStatus == 'In Progress'}">In Progress</option>
-                    <option th:value="'Resolved'" th:selected="${claim.vendorStatus == 'Resolved'}">Resolved</option>
-                </select>
+                <label>Vendor Status</label>
+                <input type="text" class="form-control" th:value="${claim.vendorStatus}" readonly />
             </div>
+
             <button type="submit" class="btn-save">Update Claim</button>
         </form>
+
     </div>
 </div>
 

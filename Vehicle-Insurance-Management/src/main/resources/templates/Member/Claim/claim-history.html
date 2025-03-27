@@ -159,7 +159,7 @@
                 <td th:text="${claim.policy.name}">Policy Name</td>
                 <td th:text="${claim.type}">Type</td>
                 <td th:text="${claim.vehicleDetails}">Vehicle</td>
-                <td th:text="${claim.vendor}">Vendor</td>
+                <td th:text="${claim.vendor.name}">Vendor</td>
                 <td><span th:text="${claim.status}" th:class="'status ' + ${claim.status}"></span></td>
                 <td th:text="${claim.vendorStatus}" th:class="'status ' + ${claim.vendorStatus}" >Pending</td>
                 <td th:text="${#temporals.format(claim.claimDate, 'yyyy-MM-dd')}">Date</td>

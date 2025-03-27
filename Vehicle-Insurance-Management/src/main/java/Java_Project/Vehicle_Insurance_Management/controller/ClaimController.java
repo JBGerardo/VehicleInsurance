@@ -73,12 +73,14 @@ public class ClaimController {
     public String submitClaim(@RequestParam Long policyId,
                               @RequestParam String vehicleDetails,
                               @RequestParam String claimType,
-                              @RequestParam String vendor,
+                              @RequestParam Long vendorId,
                               @RequestParam String description,
                               Principal principal) {
 
         User user = userRepository.findByUsername(principal.getName());
         InsurancePolicy policy = policyService.getPolicyById(policyId);
+        Vendor selectedVendor = vendorRepository.findById(vendorId).orElse(null);
+
 
         Claim claim = new Claim();
         claim.setUser(user);
@@ -87,7 +89,7 @@ public class ClaimController {
         claim.setVehicleDetails(vehicleDetails);
         claim.setType(claimType);
         claim.setVendorStatus("Pending"); // ✅ Initial vendor status
-        claim.setVendor(vendor);
+        claim.setVendor(selectedVendor); // ✅ Proper entity
         claim.setDescription(description);
         claim.setStatus("Pending");
         claim.setClaimDate(LocalDate.now());

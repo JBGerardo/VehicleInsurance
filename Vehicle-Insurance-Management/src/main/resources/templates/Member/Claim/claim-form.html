@@ -104,10 +104,12 @@
         </select>
 
         <label for="vendor">Repair Shop / Vendor:</label>
-        <select name="vendor" id="vendor" required>
+        <select name="vendorId" id="vendorId" required>
             <option value="" disabled selected>Select a vendor</option>
-            <option th:each="vendor : ${vendors}" th:value="${vendor.name}" th:text="${vendor.name}">Vendor</option>
+            <option th:each="vendor : ${vendors}" th:value="${vendor.id}" th:text="${vendor.name}">Vendor</option>
         </select>
+
+
 
         <label for="description">Claim Description:</label>
         <textarea name="description" id="description" placeholder="Describe the issue in detail..." required></textarea>
