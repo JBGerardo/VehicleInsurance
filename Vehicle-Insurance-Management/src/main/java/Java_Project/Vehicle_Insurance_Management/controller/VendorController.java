@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class VendorController {
@@ -72,8 +74,28 @@ public class VendorController {
 
         return "redirect:/vendor/view-claims";
     }
+    @GetMapping("/vendor/invoice/view/{id}")  // Add "/vendor" prefix here
+    public String viewBillingPage(@PathVariable Long id, Model model, Principal principal) {
+        Optional<Claim> optionalClaim = claimRepository.findById(id);
 
+        if (optionalClaim.isEmpty()) {
+            return "redirect:/vendor/view-claims";
+        }
 
+        Claim claim = optionalClaim.get();
+        Vendor loggedInVendor = vendorService.getLoggedInVendor();
+
+        if (!claim.getVendor().getId().equals(loggedInVendor.getId())) {
+            return "redirect:/vendor/view-claims";
+        }
+
+        if (!"Completed".equalsIgnoreCase(claim.getVendorStatus())) {
+            return "redirect:/vendor/view-claims";
+        }
+
+        model.addAttribute("claim", claim);
+        return "Vendor/Claims/vendor-claim-billing";
+    }
 
 
 }
