@@ -100,8 +100,10 @@
 
         .action-buttons {
             display: flex;
-            gap: 10px;
+            gap: 8px; /* spacing between buttons */
+            align-items: center;
         }
+
     </style>
 </head>
 <body>
@@ -154,9 +156,20 @@
                     <td th:text="${claim.claimDate}">Date</td>
                     <td th:text="${claim.vehicleDetails}">Vehicle Info</td>
                     <td>
+                    <td>
                         <div class="action-buttons">
                             <a th:href="@{'/vendor/claims/update/' + ${claim.id}}" class="btn-review">Review</a>
+
+                            <!-- Show Billing button only if vendor status is "Completed" -->
+                            <a th:if="${claim.vendorStatus == 'Completed'}"
+                               th:href="@{'/vendor/invoice/view/' + ${claim.id}}"
+                               class="btn-review"
+                               style="background-color: #28a745;">
+                                Billing
+                            </a>
                         </div>
+                    </td>
+
                     </td>
                 </tr>
 

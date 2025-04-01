@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Claim Billing</title>
+    <link rel="stylesheet" th:href="@{/css/Vendor/vendor.css}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .billing-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #555;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .info-row {
+            margin: 10px 0;
+        }
+
+        .label {
+            font-weight: bold;
+            display: inline-block;
+            width: 180px;
+        }
+
+        .amount {
+            font-size: 20px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .btn {
+            margin-top: 30px;
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="billing-container">
+    <h2>Billing Summary</h2>
+
+    <div class="section-title">Claim Details</div>
+    <div class="info-row"><span class="label">Claim ID:</span> <span th:text="${claim.id}">123</span></div>
+    <div class="info-row"><span class="label">Claim Type:</span> <span th:text="${claim.type}">Accident</span></div>
+    <div class="info-row"><span class="label">Status:</span> <span th:text="${claim.status}">Completed</span></div>
+    <div class="info-row"><span class="label">Vehicle:</span> <span th:text="${claim.vehicleDetails}">Toyota Corolla 2022</span></div>
+    <div class="info-row"><span class="label">Date:</span> <span th:text="${claim.claimDate}">2025-03-27</span></div>
+
+    <div class="section-title">Vendor Info</div>
+    <div class="info-row"><span class="label">Vendor:</span> <span th:text="${claim.vendor.name}">AutoFix Shop</span></div>
+    <div class="info-row"><span class="label">Status:</span> <span th:text="${claim.vendorStatus}">Completed</span></div>
+
+    <div class="section-title">Member Info</div>
+    <div class="info-row"><span class="label">Member:</span>
+        <span th:text="${claim.member.firstName + ' ' + claim.member.lastName}">John Doe</span>
+    </div>
+
+    <div class="section-title">Amount</div>
+    <div class="info-row"><span class="label">Total Amount:</span> <span class="amount" th:text="'₱' + ${claim.amount}">₱8,000.00</span></div>
+
+    <form th:action="@{'/vendor/invoice/generate/' + ${claim.id}}" method="post">
+        <button type="submit" class="btn">Generate Invoice</button>
+    </form>
+</div>
+
+</body>
+</html>
