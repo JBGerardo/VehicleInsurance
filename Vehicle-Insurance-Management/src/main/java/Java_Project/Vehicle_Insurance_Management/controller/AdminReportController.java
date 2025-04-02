@@ -58,12 +58,12 @@ public class AdminReportController {
     }
 
     // === CUSTOM REPORT ===
-    @GetMapping("/reports/custom")
-    public void generateCustomReport(
-            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            HttpServletResponse response
-    ) throws IOException {
-        reportService.generateCustomReport(startDate, endDate, response);
-    }
+//    @GetMapping("/reports/custom")
+//    public void generateCustomReport(
+//            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+//            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+//            HttpServletResponse response
+//    ) throws IOException {
+//        reportService.generateCustomReport(startDate, endDate, response);
+//    }
 }
