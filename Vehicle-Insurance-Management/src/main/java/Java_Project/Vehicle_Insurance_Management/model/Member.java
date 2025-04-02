@@ -106,4 +106,9 @@ public class Member {
         this.claims = claims;
     }
 
+    // A method to return full name
+    public String getName() {
+        return firstName + " " + lastName;
+    }
+
 }

@@ -13,5 +13,6 @@ public interface ClaimRepository extends JpaRepository<Claim, Long> {
     List<Claim> findByTypeContainingIgnoreCase(String type);
     List<Claim> findByVendor(Vendor vendor);
     List<Claim> findByVendorId(Long vendorId);
+    List<Claim> findAll();  // Retrieve all claims
 
 }

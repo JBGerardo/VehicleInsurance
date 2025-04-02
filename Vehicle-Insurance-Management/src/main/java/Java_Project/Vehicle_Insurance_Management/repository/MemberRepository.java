@@ -11,5 +11,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     // You can add custom query methods here if needed
     // This method will search for members by their first name, ignoring case
     List<Member> findByFirstNameContainingIgnoreCase(String firstName);
+    List<Member> findAll();  // Retrieve all members
 
 }

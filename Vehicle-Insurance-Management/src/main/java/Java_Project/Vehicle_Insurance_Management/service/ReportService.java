@@ -1,18 +1,34 @@
 package Java_Project.Vehicle_Insurance_Management.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.util.List;
+import Java_Project.Vehicle_Insurance_Management.model.Member;
+import Java_Project.Vehicle_Insurance_Management.model.Claim;
+import Java_Project.Vehicle_Insurance_Management.model.Vendor;
+import Java_Project.Vehicle_Insurance_Management.repository.MemberRepository;
+import Java_Project.Vehicle_Insurance_Management.repository.ClaimRepository;
+import Java_Project.Vehicle_Insurance_Management.repository.VendorRepository;
 
 @Service
 public class ReportService {
+
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private ClaimRepository claimRepository;
+
+    @Autowired
+    private VendorRepository vendorRepository;
 
     // 🔹 MEMBER REPORT: PDF
     public void generateMemberReportPDF(HttpServletResponse response) throws IOException {
@@ -24,22 +40,14 @@ public class ReportService {
         Document document = new Document(pdf);
 
         document.add(new Paragraph("📄 Member Report"));
-        document.add(new Paragraph("ID: 1\nName: John Doe\nEmail: john@example.com"));
-        document.add(new Paragraph("ID: 2\nName: Jane Smith\nEmail: jane@example.com"));
+
+        // Retrieve data dynamically from the MemberRepository
+        List<Member> members = memberRepository.findAll();
+        for (Member member : members) {
+            document.add(new Paragraph("ID: " + member.getId() + "\nName: " + member.getName() + "\nEmail: " + member.getEmail()));
+        }
 
         document.close();
-    }
-
-    // 🔹 MEMBER REPORT: CSV
-    public void generateMemberReportCSV(HttpServletResponse response) throws IOException {
-        response.setContentType("text/csv");
-        response.setHeader("Content-Disposition", "attachment; filename=member-report.csv");
-
-        PrintWriter writer = response.getWriter();
-        writer.println("ID,First Name,Last Name,Email,Phone");
-        writer.println("1,John,Doe,john@example.com,123-4567");
-        writer.println("2,Jane,Smith,jane@example.com,987-6543");
-        writer.flush();
     }
 
     // 🔹 CLAIM REPORT: PDF
@@ -52,22 +60,14 @@ public class ReportService {
         Document document = new Document(pdf);
 
         document.add(new Paragraph("📄 Claim Report"));
-        document.add(new Paragraph("Type: Accident\nStatus: Approved\nDate: 2025-03-25"));
-        document.add(new Paragraph("Type: Theft\nStatus: Pending\nDate: 2025-03-26"));
+
+        // Retrieve data dynamically from the ClaimRepository
+        List<Claim> claims = claimRepository.findAll();
+        for (Claim claim : claims) {
+            document.add(new Paragraph("Type: " + claim.getType() + "\nStatus: " + claim.getStatus() + "\nDate: " + claim.getClaimDate()));
+        }
 
         document.close();
-    }
-
-    // 🔹 CLAIM REPORT: CSV
-    public void generateClaimReportCSV(HttpServletResponse response) throws IOException {
-        response.setContentType("text/csv");
-        response.setHeader("Content-Disposition", "attachment; filename=claim-report.csv");
-
-        PrintWriter writer = response.getWriter();
-        writer.println("ID,Type,Status,Date,Vehicle,Vendor");
-        writer.println("1,Accident,Approved,2025-03-25,CRV,AutoFix Center");
-        writer.println("2,Theft,Pending,2025-03-26,Civic,DriveWell Repairs");
-        writer.flush();
     }
 
     // 🔹 VENDOR REPORT: PDF
@@ -80,10 +80,48 @@ public class ReportService {
         Document document = new Document(pdf);
 
         document.add(new Paragraph("🧾 Partner Vendor Report"));
-        document.add(new Paragraph("Name: AutoFix Center\nStatus: Active"));
-        document.add(new Paragraph("Name: Speedy Garage\nStatus: Pending"));
+
+        // Retrieve data dynamically from the VendorRepository
+        List<Vendor> vendors = vendorRepository.findAll();
+        for (Vendor vendor : vendors) {
+            document.add(new Paragraph("Name: " + vendor.getName() + "\nStatus: " + vendor.getStatus()));
+        }
 
         document.close();
+    }
+
+    // 🔹 MEMBER REPORT: CSV
+    public void generateMemberReportCSV(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment; filename=member-report.csv");
+
+        PrintWriter writer = response.getWriter();
+        writer.println("ID,First Name,Last Name,Email,Phone");
+
+        // Retrieve data dynamically from the MemberRepository
+        List<Member> members = memberRepository.findAll();
+        for (Member member : members) {
+            writer.println(member.getId() + "," + member.getFirstName() + "," + member.getLastName() + "," + member.getEmail() + "," + member.getPhone());
+        }
+
+        writer.flush();
+    }
+
+    // 🔹 CLAIM REPORT: CSV
+    public void generateClaimReportCSV(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment; filename=claim-report.csv");
+
+        PrintWriter writer = response.getWriter();
+        writer.println("ID,Type,Status,Date,Vehicle,Vendor");
+
+        // Retrieve data dynamically from the ClaimRepository
+        List<Claim> claims = claimRepository.findAll();
+        for (Claim claim : claims) {
+            writer.println(claim.getId() + "," + claim.getType() + "," + claim.getStatus() + "," + claim.getClaimDate() + "," + claim.getVehicleDetails() + "," + claim.getVendor());
+        }
+
+        writer.flush();
     }
 
     // 🔹 VENDOR REPORT: CSV
@@ -93,25 +131,36 @@ public class ReportService {
 
         PrintWriter writer = response.getWriter();
         writer.println("ID,Vendor Name,Status");
-        writer.println("1,AutoFix Center,Active");
-        writer.println("2,DriveWell Repairs,Pending");
+
+        // Retrieve data dynamically from the VendorRepository
+        List<Vendor> vendors = vendorRepository.findAll();
+        for (Vendor vendor : vendors) {
+            writer.println(vendor.getId() + "," + vendor.getName() + "," + vendor.getStatus());
+        }
+
         writer.flush();
     }
 
-    // 🔹 CUSTOM DATE RANGE REPORT: PDF
-    public void generateCustomReport(LocalDate start, LocalDate end, HttpServletResponse response) throws IOException {
-        response.setContentType("application/pdf");
-        response.setHeader("Content-Disposition", "attachment; filename=custom-report.pdf");
-
-        PdfWriter writer = new PdfWriter(response.getOutputStream());
-        PdfDocument pdf = new PdfDocument(writer);
-        Document document = new Document(pdf);
-
-        document.add(new Paragraph("📆 Custom Report"));
-        document.add(new Paragraph("Start Date: " + start));
-        document.add(new Paragraph("End Date: " + end));
-        document.add(new Paragraph("• Include filtered logic here based on the date range."));
-
-        document.close();
-    }
+//    // 🔹 CUSTOM DATE RANGE REPORT: PDF
+//    public void generateCustomReport(LocalDate start, LocalDate end, HttpServletResponse response) throws IOException {
+//        response.setContentType("application/pdf");
+//        response.setHeader("Content-Disposition", "attachment; filename=custom-report.pdf");
+//
+//        PdfWriter writer = new PdfWriter(response.getOutputStream());
+//        PdfDocument pdf = new PdfDocument(writer);
+//        Document document = new Document(pdf);
+//
+//        document.add(new Paragraph("📆 Custom Report"));
+//        document.add(new Paragraph("Start Date: " + start));
+//        document.add(new Paragraph("End Date: " + end));
+//        document.add(new Paragraph("• Include filtered logic here based on the date range."));
+//
+//        // Example: You can filter claims or policies based on the date range
+//        List<Claim> claimsInRange = claimRepository.find(start, end);
+//        for (Claim claim : claimsInRange) {
+//            document.add(new Paragraph("Claim ID: " + claim.getId() + "\nDate: " + claim.getDate() + "\nType: " + claim.getType()));
+//        }
+//
+//        document.close();
+//    }
 }
