@@ -72,9 +72,6 @@ public class AdminClaimController {
 
         return "redirect:/admin/manage-claims";
     }
-
-
-
     // Delete claim
     @GetMapping("/delete/{id}")
     public String deleteClaim(@PathVariable Long id) {
